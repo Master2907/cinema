@@ -1,0 +1,155 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cinema.uz</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'slick-1.8.1/slick/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'slick-1.8.1/slick/slick-theme.css' %}">
+    <link rel="icon" href="{% static 'img/icon.svg' %}">
+</head>
+
+<body>
+<!-- NAVBAR START -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid container-lg px-5 px-lg-0">
+        <a class="navbar-brand d-flex" href="#">
+            <img src="{% static 'img/icon.png' %}" class="brand-icon" alt="">
+            <h4 class="my-auto ms-1 brand-name">Cinema.uz</h4>
+        </a>
+        <div class="d-flex">
+{#            <li class="nav-item py-2 me-3 d-block d-lg-none">#}
+{#                <a href="#">#}
+{#                    <button class="btn btn-outline-success">Sign in</button>#}
+{#                </a>#}
+{#            </li>#}
+            <li class="nav-item dropdown d-block d-lg-none">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img class="user-icon me-2" src="{% static 'img/user-icon.jpg' %}" alt="">Umar Khashimov
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                    <li><a class="dropdown-item" href="#"><img class="nav-icon me-2"
+                                                               src="{% static 'img/account-icon.png' %}"
+                                                               alt=account-icon>Account</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#"><img class="nav-icon me-2"
+                                                               src="{% static 'img/saved-bookmark.png' %}"
+                                                               alt="bookmark-icon">Saved
+                        films</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#"><img class="nav-icon ms-1 me-2"
+                                                               src="{% static 'img/logout-icon.png' %}"
+                                                               alt="logout-icon">Logout</a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-lg-row flex-column align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link active" href="./index.html/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./films-list.html">Films</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./films-list.html">Cartoons</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 px-5 px-lg-0">
+                <form class="d-flex mx-3 py-2 px-5 px-lg-0">
+                    <input class="form-control me-2 " type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+{#                <li class="nav-item d-none d-lg-block py-2">#}
+{#                    <a href="./registration.html">#}
+{#                        <button class="btn btn-outline-success">Sign in</button>#}
+{#                    </a>#}
+{#                </li>#}
+                <li class="nav-item dropdown d-none d-lg-block">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="user-icon me-2" src="{% static 'img/user-icon.jpg' %}" alt="">Umar Khashimov
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item" href="#"><img alt="" class="nav-icon me-2"
+                                                                   src="{% static 'img/account-icon.png' %}">Account</a>
+                        </li>
+                        <li><a class="dropdown-item" href="#"><img alt="" class="nav-icon me-2"
+                                                                   src="{% static 'img/saved-bookmark.png' %}">Saved
+                            films</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#"><img alt="" class="nav-icon ms-1 me-2"
+                                                                   src="{% static 'img/logout-icon.png' %}">Logout</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- NAVBAR END -->
+
+{% block content %}
+
+{% endblock %}
+
+<!-- FOOTER START -->
+<div class="container-fluid container-lg mt-5 pt-5 p-0">
+    <div class="row footer justify-content-between p-5">
+        <div class="col-3 col-md-3 col-lg-4 ">
+            <p class="d-flex justify-content-center">Contact Us</p>
+            <hr>
+            <div class="d-flex justify-content-center">
+                <a href="https://www.instagram.com/master_2292">
+                    <img class="contact-icons" src="{% static 'img/instagram-icon.png' %}" alt="">
+                </a>
+                <a href="https://www.facebook.com/" class="ms-3">
+                    <img class="contact-icons" src="{% static 'img/facebook-icon.png' %}" alt="">
+                </a>
+                <a href="https://t.me/Master_2907" class="ms-3">
+                    <img class="contact-icons" src="{% static 'img/telegram-icons.png' %}" alt="">
+                </a>
+                <a href="#" class="ms-3">
+                    <img class="contact-icons" src="{% static 'img/telephone-icon.png' %}" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="col-3 col-lg-4 d-flex flex-column">
+            <p class="m-0 d-flex justify-content-center">Watch</p>
+            <hr>
+            <div class="d-flex justify-content-center flex-column align-items-center">
+                <a href="#" class="film-name">films</a>
+                <a href="#" class="film-name">Series</a>
+                <a href="#" class="film-name">cartoons</a>
+            </div>
+        </div>
+        <div class="col-3 offset-1">
+            <h1 class="">Cinema.uz</h1>
+            <h5 class="text-white mt-3">Watch any film for free !</h5>
+        </div>
+    </div>
+</div>
+<!-- FOOTER END -->
+
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+<script src="{% static 'slick-1.8.1/slick/slick.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
