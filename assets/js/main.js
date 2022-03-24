@@ -1,5 +1,4 @@
 $('.my-slickies').slick({
-  infinite: true,
   autoplay: true,
   autoplaySpeed: 4000,
   speed: 500,
