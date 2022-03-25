@@ -7,3 +7,4 @@ class HomePageView(ListView):
     model = FilmModel
     template_name = 'main/index.html'
     context_object_name = 'films'
+

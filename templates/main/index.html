@@ -53,77 +53,81 @@
             <div class="col-12">
                 <h2 class="text-white m-0 mx-3" href="#">New</h2>
                 <div class="my-slickies my-3">
-                {% for i in films %}
-                    {% for film in films %}
-                        <div class="slicks position-relative slick-div mx-2 pt-5">
-                            <div class="slicks-inner-div position-absolute w-100 d-none">
-                                <a href="#" class="">
-                                    <img class="position-absolute" src="{% static 'img/bookmark-icon-light.png' %}"
-                                         alt="">
-                                </a>
-                                <div class="position-absolute slicks-inner-content w-100">
-                                    <div>
-                                        <p class="m-0 ms-2 px-1 text-white">{{ film.year }} : {{ film.movie_type|title }}</p>
-                                    <p class="m-0 mb-3 px-1 mt-1 ms-2 text-white">
-                                            {% for genre in film.genre.all %}
-                                                {{ genre|title }},
-                                            {% endfor %}
-                                    </p>
-                                    </div>
-                                    <div class="px-2 py-1 watch-button position-absolute w-100">
-                                        <a href="./film-detail.html" class="btn btn-primary p-1 w-100"><p class="m-0">
-                                            Watch</p>
-                                        </a>
+                    {% for i in films.get_adventure %}
+                        {% for film in films %}
+                            <div class="slicks position-relative slick-div mx-2 pt-5">
+                                <div class="slicks-inner-div position-absolute w-100 d-none">
+                                    <a href="#" class="">
+                                        <img class="position-absolute" src="{% static 'img/bookmark-icon-light.png' %}"
+                                             alt="">
+                                    </a>
+                                    <div class="position-absolute slicks-inner-content w-100">
+                                        <div>
+                                            <p class="m-0 ms-2 px-1 text-white">{{ film.year }}
+                                                : {{ film.movie_type|title }}</p>
+                                            <p class="m-0 mb-3 px-1 mt-1 ms-2 text-white">
+                                                {% for genre in film.genre.all %}
+                                                    {{ genre|title }},
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                        <div class="px-2 py-1 watch-button position-absolute w-100">
+                                            <a href="./film-detail.html" class="btn btn-primary p-1 w-100"><p
+                                                    class="m-0">
+                                                Watch</p>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
+                                <img src="{{ film.image.url }}" class="slick-img w-100 h-100" alt="">
+                                <a href="#">
+                                    <p class="text-white film-name mt-1 ms-1">{{ film.name }}</p>
+                                </a>
                             </div>
-                            <img src="{{ film.image.url }}" class="slick-img w-100 h-100" alt="">
-                            <a href="#">
-                                <p class="text-white film-name mt-1 ms-1">{{ film.name }}</p>
-                            </a>
-                        </div>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
 
 
                 </div>
             </div>
         </div>
-    <div class="row mt-3 mx-1">
+        <div class="row mt-3 mx-1">
             <div class="col-12">
-                <h2 class="text-white m-0 mt-5 mx-3" href="#">For family</h2>
+                <h2 class="text-white m-0 mt-5 mx-3" href="#">Adventure</h2>
                 <div class="my-slickies my-3">
-                {% for i in films %}
-                    {% for film in films %}
-                        <div class="slicks position-relative slick-div mx-2 pt-5">
-                            <div class="slicks-inner-div position-absolute w-100 d-none">
-                                <a href="#" class="">
-                                    <img class="position-absolute" src="{% static 'img/bookmark-icon-light.png' %}"
-                                         alt="">
-                                </a>
-                                <div class="position-absolute slicks-inner-content w-100">
-                                    <div>
-                                        <p class="m-0 ms-2 px-1 text-white">{{ film.year }} : {{ film.movie_type|title }}</p>
-                                    <p class="m-0 mb-3 px-1 mt-1 ms-2 text-white">
-                                            {% for genre in film.genre.all %}
-                                                {{ genre|title }},
-                                            {% endfor %}
-                                    </p>
-                                    </div>
-                                    <div class="px-2 py-1 watch-button position-absolute w-100">
-                                        <a href="./film-detail.html" class="btn btn-primary p-1 w-100"><p class="m-0">
-                                            Watch</p>
-                                        </a>
+                    {% for i in films %}
+                        {% for film in films %}
+                            <div class="slicks position-relative slick-div mx-2 pt-5">
+                                <div class="slicks-inner-div position-absolute w-100 d-none">
+                                    <a href="#" class="">
+                                        <img class="position-absolute" src="{% static 'img/bookmark-icon-light.png' %}"
+                                             alt="">
+                                    </a>
+                                    <div class="position-absolute slicks-inner-content w-100">
+                                        <div>
+                                            <p class="m-0 ms-2 px-1 text-white">{{ film.year }}
+                                                : {{ film.movie_type|title }}</p>
+                                            <p class="m-0 mb-3 px-1 mt-1 ms-2 text-white">
+                                                {% for genre in film.genre.all %}
+                                                    {{ genre|title }},
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                        <div class="px-2 py-1 watch-button position-absolute w-100">
+                                            <a href="./film-detail.html" class="btn btn-primary p-1 w-100"><p
+                                                    class="m-0">
+                                                Watch</p>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
+                                <img src="{{ film.image.url }}" class="slick-img w-100 h-100" alt="">
+                                <a href="#">
+                                    <p class="text-white film-name mt-1 ms-1">{{ film.name }}</p>
+                                </a>
                             </div>
-                            <img src="{{ film.image.url }}" class="slick-img w-100 h-100" alt="">
-                            <a href="#">
-                                <p class="text-white film-name mt-1 ms-1">{{ film.name }}</p>
-                            </a>
-                        </div>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
 
 
                 </div>

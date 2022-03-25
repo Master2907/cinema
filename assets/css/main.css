@@ -346,6 +346,11 @@ option {
     font-size: 18px;
 }
 
+.slick-prev,
+.slick-next {
+    padding-bottom: 100px !important;
+}
+
 @media (max-width: 991px) {
     .nav-link {
         font-size: 20px;
