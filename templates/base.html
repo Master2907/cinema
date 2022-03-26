@@ -58,13 +58,13 @@
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-lg-row flex-column align-items-center">
-            {% url 'pages:home' as current_path %}
+            {% url 'home' as current_path %}
                 <li class="nav-item">
-                    <a class="nav-link {% if request.path == current_path %}active{% endif %}" href="{% url 'pages:home' %}">Home</a>
+                    <a class="nav-link {% if request.path == current_path %}active{% endif %}" href="{% url 'home' %}">Home</a>
                 </li>
-            {% url 'pages:films' as current_path %}
+            {% url 'films' as current_path %}
                 <li class="nav-item">
-                    <a class="nav-link {% if request.path == current_path %}active{% endif %}" href="{% url 'pages:films' %}">Films</a>
+                    <a class="nav-link {% if request.path == current_path %}active{% endif %}" href="{% url 'films' %}">Films</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./films-list.html">Cartoons</a>
