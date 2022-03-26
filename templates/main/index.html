@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <!-- BANNER START -->
+
     <div class="container-fluid container-lg px-5 px-lg-0 pb-5 mt-4 mx-auto">
+        <!-- BANNER START -->
         <div class="row pb-5">
             <div class="col-12">
                 <div id="carouselExampleFade" class="carousel slide carousel-fade mt-3" data-bs-ride="carousel">
@@ -16,21 +17,23 @@
                                 aria-label="Slide 3"></button>
                     </div>
                     <div class="carousel-inner">
-                        <div class="carousel-item active p-1">
-                            <a href="./film-detail.html">
-                                <img src="{% static 'img/banner-1.jpg' %}" class="banners img-fluid w-100" alt="...">
-                            </a>
-                        </div>
-                        <div class="carousel-item p-1">
-                            <a href="#">
-                                <img src="{% static 'img/banner-2.jpg' %}" class="banners img-fluid w-100" alt="...">
-                            </a>
-                        </div>
-                        <div class="carousel-item p-1">
-                            <a href="#">
-                                <img src="{% static 'img/banner-3.webp' %}" class="banners img-fluid w-100" alt="...">
-                            </a>
-                        </div>
+                        {% for banner in banners %}
+                            {% if banner == banners|first %}
+                                <div class="carousel-item active p-1">
+                                    <a href="./film-detail.html">
+                                        <img src="{{ banner.banner_img.url }}" class="banners img-fluid w-100"
+                                             alt="...">
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="carousel-item p-1">
+                                    <a href="./film-detail.html">
+                                        <img src="{{ banner.banner_img.url }}" class="banners img-fluid w-100"
+                                             alt="...">
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
                             data-bs-slide="prev">
@@ -53,8 +56,8 @@
             <div class="col-12">
                 <h2 class="text-white m-0 mx-3" href="#">New</h2>
                 <div class="my-slickies my-3">
-                    {% for i in films.get_adventure %}
-                        {% for film in films %}
+                    {% for i in object_list %}
+                        {% for film in object_list %}
                             <div class="slicks position-relative slick-div mx-2">
                                 <div class="slicks-inner-div position-absolute w-100 d-none">
                                     <a href="#" class="">
@@ -93,11 +96,52 @@
         </div>
         <div class="row mt-3 mx-1">
             <div class="col-12">
-                <h2 class="text-white m-0 mt-5 mx-3" href="#">Adventure</h2>
+                <h2 class="text-white m-0 mx-3" href="#">Films</h2>
                 <div class="my-slickies my-3">
-                    {% for i in films %}
-                        {% for film in films %}
-                            <div class="slicks position-relative slick-div mx-2 pt-5">
+                    {% for i in type_film %}
+                        {% for film in type_film %}
+                            <div class="slicks position-relative slick-div mx-2">
+                                <div class="slicks-inner-div position-absolute w-100 d-none">
+                                    <a href="#" class="">
+                                        <img class="position-absolute" src="{% static 'img/bookmark-icon-light.png' %}"
+                                             alt="">
+                                    </a>
+                                    <div class="position-absolute slicks-inner-content w-100">
+                                        <div>
+                                            <p class="m-0 ms-2 px-1 text-white">{{ film.year }}
+                                                : {{ film.movie_type|title }}</p>
+                                            <p class="m-0 mb-3 px-1 mt-1 ms-2 text-white">
+                                                {% for genre in film.genre.all %}
+                                                    {{ genre|title }},
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                        <div class="px-2 py-1 watch-button position-absolute w-100">
+                                            <a href="./film-detail.html" class="btn btn-primary p-1 w-100"><p
+                                                    class="m-0">
+                                                Watch</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src="{{ film.image.url }}" class="slick-img w-100 h-100" alt="">
+                                <a href="#">
+                                    <p class="text-white film-name mt-1 ms-1">{{ film.name }}</p>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    <div class="row mt-3 mx-1">
+            <div class="col-12">
+                <h2 class="text-white m-0 mx-3" href="#">Cartoons</h2>
+                <div class="my-slickies my-3">
+                    {% for i in type_cartoon %}
+                        {% for film in type_cartoon %}
+                            <div class="slicks position-relative slick-div mx-2">
                                 <div class="slicks-inner-div position-absolute w-100 d-none">
                                     <a href="#" class="">
                                         <img class="position-absolute" src="{% static 'img/bookmark-icon-light.png' %}"
@@ -129,11 +173,9 @@
                         {% endfor %}
                     {% endfor %}
 
-
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- BODY END -->
 {% endblock %}
