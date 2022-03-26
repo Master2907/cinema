@@ -13,10 +13,9 @@
                             <div class="d-flex">
                                 <p class="my-1 me-2">Genre :</p>
                                 <select class="form-select selections" aria-label="Default select example">
-                                    <option value="0">Zero</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    {% for genre in genres %}
+                                        <option value="{{ genre }}">{{ genre }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -26,24 +25,11 @@
                     <div class="w-100 ">
                         <div class="d-flex justify-content-center justify-content-lg-around">
                             <div class=" d-flex">
-                                <p class="my-1 me-2">Year:</p>
+                                <p class="my-1 me-2">Year :</p>
                                 <select class="form-select selections" aria-label="Default select example">
-                                    <option value="0">1990</option>
-                                    <option value="1">1991</option>
-                                    <option value="2">1992</option>
-                                    <option value="3">1993</option>
-                                    <option value="0">1994</option>
-                                    <option value="1">1995</option>
-                                    <option value="2">1996</option>
-                                    <option value="3">1997</option>
-                                    <option value="0">1998</option>
-                                    <option value="1">1999</option>
-                                    <option value="2">2000</option>
-                                    <option value="3">2001</option>
-                                    <option value="0">2002</option>
-                                    <option value="1">2003</option>
-                                    <option value="2">2004</option>
-                                    <option value="3">2005</option>
+                                    {% for i in object_list %}
+                                        <option value="{{ i.year }}">{{ i.year }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -53,12 +39,11 @@
                     <div class="w-100 ">
                         <div class="d-flex justify-content-end justify-content-lg-around mt-3 mt-lg-0 me-4 me-lg-0">
                             <div class="d-flex">
-                                <p class="my-1 me-2">Tag:</p>
-                                <select class="form-select selections" aria-label="Default select example">
-                                    <option value="0">Zero</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <p class="my-1 me-2">Tag :</p>
+                                <select class="form-select selections">
+                                    {% for tag in tags %}
+                                        <option value="{{ tag }}">{{ tag }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -68,7 +53,7 @@
                     <div class="w-100">
                         <div class="d-flex justify-content-center justify-content-lg-around me-3 pe-1 pe-lg-0 me-lg-0 mt-3 mt-lg-0">
                             <div class="d-flex">
-                                <p class="my-1 me-2">Rating:</p>
+                                <p class="my-1 me-2">Rating :</p>
                                 <select class="form-select selections" aria-label="Default select example">
                                     <option value="0">High to low</option>
                                     <option value="0">Low to High</option>
@@ -88,9 +73,6 @@
                 <div class="col-4 col-lg-3 col-xl-2 mt-5">
                     <div class="film-cards position-relative my-3">
                         <div class="film-card-in-div d-none position-absolute w-100 h-100">
-                            <a href="#"><img src="{% static 'img/bookmark-icon-light.png' %}"
-                                             class="mt-2 film-card-img position-absolute"
-                                             alt=""></a>
                             <div class="film-d-in-div w-100 position-absolute">
                                 <p class="m-0 mx-2">{{ film.year }}:</p>
                                 <p class="m-0 mx-2">{% for genre in film.genre.all %}
@@ -112,29 +94,41 @@
             {% endfor %}
 
             <!-- FILM CARDS END -->
-
-            <div class="row mt-5 pt-5">
-                <div class="col-6 offset-5">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item ms-1"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item ms-1 active"><a class="page-link active" href="#">2</a></li>
-                            <li class="page-item ms-1"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item ms-1">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+            {% if page_obj.paginator.count >= 13 %}
+                <div class="row mt-5 pt-5">
+                    <div class="col-12 ">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination ">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                                           aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% for page in paginator.page_range %}
+                                    {% if page_obj.number == page %}
+                                        <li class="page-item ms-1"><a class="page-link active"
+                                                                      href="?page={{ page }}">{{ page }}</a></li>
+                                    {% elif page > page_obj.number|add:-5 and page < page_obj.number|add:5 %}
+                                        <li class="page-item ms-1"><a class="page-link"
+                                                                      href="?page={{ page }}">{{ page }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="page-item ms-1">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}"
+                                           aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
-
         <!-- BODY END -->
 {% endblock %}

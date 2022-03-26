@@ -56,7 +56,7 @@ class FilmModel(models.Model):
     genre = models.ManyToManyField(GenreModel, verbose_name=_("genre"))
     tag = models.ManyToManyField(TagModel, verbose_name=_("tag"))
     movie_type = models.CharField(max_length=20, choices=m_type, default=1, verbose_name=_("movie type"))
-    year = models.CharField(max_length=4,choices=f_year, default=f_year[-1], verbose_name=_('year'))
+    year = models.CharField(max_length=4, choices=f_year, default=f_year[-1], verbose_name=_('year'))
     age = models.CharField(max_length=3, choices=f_age, default=3, verbose_name=_('age'))
 
     def __str__(self):

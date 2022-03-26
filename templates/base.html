@@ -20,11 +20,11 @@
             <h4 class="my-auto ms-1 brand-name">Cinema.uz</h4>
         </a>
         <div class="d-flex">
-{#            <li class="nav-item py-2 me-3 d-block d-lg-none">#}
-{#                <a href="#">#}
-{#                    <button class="btn btn-outline-success">Sign in</button>#}
-{#                </a>#}
-{#            </li>#}
+            {#            <li class="nav-item py-2 me-3 d-block d-lg-none">#}
+            {#                <a href="#">#}
+            {#                    <button class="btn btn-outline-success">Sign in</button>#}
+            {#                </a>#}
+            {#            </li>#}
             <li class="nav-item dropdown d-block d-lg-none">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
                    data-bs-toggle="dropdown" aria-expanded="false">
@@ -35,12 +35,7 @@
                                                                src="{% static 'img/account-icon.png' %}"
                                                                alt=account-icon>Account</a>
                     </li>
-                    <li><a class="dropdown-item" href="#"><img class="nav-icon me-2"
-                                                               src="{% static 'img/saved-bookmark.png' %}"
-                                                               alt="bookmark-icon">Saved
-                        films</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
+                    <hr class="dropdown-divider">
                     </li>
                     <li><a class="dropdown-item" href="#"><img class="nav-icon ms-1 me-2"
                                                                src="{% static 'img/logout-icon.png' %}"
@@ -58,16 +53,19 @@
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-lg-row flex-column align-items-center">
-            {% url 'home' as current_path %}
+                {% url 'pages:home' as current_path %}
                 <li class="nav-item">
-                    <a class="nav-link {% if request.path == current_path %}active{% endif %}" href="{% url 'home' %}">Home</a>
+                    <a class="nav-link {% if request.path == current_path %}active{% endif %}"
+                       href="{% url 'pages:home' %}">Home</a>
                 </li>
-            {% url 'films' as current_path %}
+                {% url 'pages:films' as current_path %}
                 <li class="nav-item">
-                    <a class="nav-link {% if request.path == current_path %}active{% endif %}" href="{% url 'films' %}">Films</a>
+                    <a class="nav-link {% if request.path == current_path %}active{% endif %}"
+                       href="{% url 'pages:films' %}">Films</a>
                 </li>
+            {% url 'pages:cartoon' as current_path %}
                 <li class="nav-item">
-                    <a class="nav-link" href="./films-list.html">Cartoons</a>
+                    <a class="nav-link {% if request.path == current_path %}active{% endif %}" href="{% url 'pages:cartoon' %}">Cartoons</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 px-5 px-lg-0">
@@ -75,11 +73,11 @@
                     <input class="form-control me-2 " type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
-{#                <li class="nav-item d-none d-lg-block py-2">#}
-{#                    <a href="./registration.html">#}
-{#                        <button class="btn btn-outline-success">Sign in</button>#}
-{#                    </a>#}
-{#                </li>#}
+                {#                <li class="nav-item d-none d-lg-block py-2">#}
+                {#                    <a href="./registration.html">#}
+                {#                        <button class="btn btn-outline-success">Sign in</button>#}
+                {#                    </a>#}
+                {#                </li>#}
                 <li class="nav-item dropdown d-none d-lg-block">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
@@ -89,9 +87,7 @@
                         <li><a class="dropdown-item" href="#"><img alt="" class="nav-icon me-2"
                                                                    src="{% static 'img/account-icon.png' %}">Account</a>
                         </li>
-                        <li><a class="dropdown-item" href="#"><img alt="" class="nav-icon me-2"
-                                                                   src="{% static 'img/saved-bookmark.png' %}">Saved
-                            films</a></li>
+
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -113,22 +109,22 @@
 
 <!-- FOOTER START -->
 <div class="container-fluid container-lg mt-5 pt-5 p-0">
-    <div class="row footer justify-content-between p-5">
+    <div class="row footer justify-content-between px5">
         <div class="col-3 col-md-3 col-lg-4 ">
             <p class="d-flex justify-content-center">Contact Us</p>
             <hr>
             <div class="d-flex justify-content-center">
                 <a href="https://www.instagram.com/master_2292">
-                    <img class="contact-icons" src="{% static 'img/instagram-icon.png' %}" alt="">
+                    <img class="contact-icons" src="{% static 'img/instagram-icon.svg' %}" alt="">
                 </a>
                 <a href="https://www.facebook.com/" class="ms-3">
-                    <img class="contact-icons" src="{% static 'img/facebook-icon.png' %}" alt="">
+                    <img class="contact-icons" src="{% static 'img/facebook-icon.svg' %}" alt="">
                 </a>
                 <a href="https://t.me/Master_2907" class="ms-3">
                     <img class="contact-icons" src="{% static 'img/telegram-icons.png' %}" alt="">
                 </a>
                 <a href="#" class="ms-3">
-                    <img class="contact-icons" src="{% static 'img/telephone-icon.png' %}" alt="">
+                    <img class="contact-icons" src="{% static 'img/youtube-icon.svg' %}" alt="">
                 </a>
             </div>
         </div>

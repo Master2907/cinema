@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- BODY START  -->
+    <div class="container mt-5">
+        <!-- FILTER START -->
+
+        <div class="row my-3 filter-div py-4 px-5">
+            <div class="row px-2">
+                <div class="col-6 col-lg-3 px-0">
+                    <div class="w-100 ">
+                        <div class="d-flex justify-content-end justify-content-lg-around me-4 me-lg-0">
+                            <div class="d-flex">
+                                <p class="my-1 me-2">Genre :</p>
+                                <select class="form-select selections" aria-label="Default select example">
+                                    {% for genre in genres %}
+                                        <option value="{{ genre }}">{{ genre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 px-0">
+                    <div class="w-100 ">
+                        <div class="d-flex justify-content-center justify-content-lg-around">
+                            <div class=" d-flex">
+                                <p class="my-1 me-2">Year :</p>
+                                <select class="form-select selections" aria-label="Default select example">
+                                    {% for i in object_list %}
+                                        <option value="{{ i.year }}">{{ i.year }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 px-0">
+                    <div class="w-100 ">
+                        <div class="d-flex justify-content-end justify-content-lg-around mt-3 mt-lg-0 me-4 me-lg-0">
+                            <div class="d-flex">
+                                <p class="my-1 me-2">Tag :</p>
+                                <select class="form-select selections">
+                                    {% for tag in tags %}
+                                        <option value="{{ tag }}">{{ tag }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 px-0">
+                    <div class="w-100">
+                        <div class="d-flex justify-content-center justify-content-lg-around me-3 pe-1 pe-lg-0 me-lg-0 mt-3 mt-lg-0">
+                            <div class="d-flex">
+                                <p class="my-1 me-2">Rating :</p>
+                                <select class="form-select selections" aria-label="Default select example">
+                                    <option value="0">High to low</option>
+                                    <option value="0">Low to High</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILTER END -->
+
+        <!-- FILM CARDS START -->
+        <div class="row ">
+            {% for film in object_list %}
+                <div class="col-4 col-lg-3 col-xl-2 mt-5">
+                    <div class="film-cards position-relative my-3">
+                        <div class="film-card-in-div d-none position-absolute w-100 h-100">
+                            <div class="film-d-in-div w-100 position-absolute">
+                                <p class="m-0 mx-2">{{ film.year }}:</p>
+                                <p class="m-0 mx-2">{% for genre in film.genre.all %}
+                                    {{ genre|title }},
+                                {% endfor %}</p>
+                            </div>
+                            <div class="px-2 py-1 position-absolute watch-card-button w-100">
+                                <a href="#" class="btn btn-primary p-1 w-100">
+                                    <p class="m-0">Watch</p>
+                                </a>
+                            </div>
+                        </div>
+                        <img src="{{ film.image.url }}" class="mb-1 h-100 w-100 img-fluid" alt="">
+                        <a href="#" class=" film-name">
+                            <p class="ps-1">{{ film.name }}</p>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <!-- FILM CARDS END -->
+            {% if page_obj.paginator.count >= 13 %}
+                <div class="row mt-5 pt-5">
+                    <div class="col-12 ">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination ">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                                           aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% for page in paginator.page_range %}
+                                    {% if page_obj.number == page %}
+                                        <li class="page-item ms-1"><a class="page-link active"
+                                                                      href="?page={{ page }}">{{ page }}</a></li>
+                                    {% elif page > page_obj.number|add:-5 and page < page_obj.number|add:5 %}
+                                        <li class="page-item ms-1"><a class="page-link"
+                                                                      href="?page={{ page }}">{{ page }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="page-item ms-1">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}"
+                                           aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <!-- BODY END -->
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from films.models import FilmModel, BannerModel
+from films.models import FilmModel, BannerModel, TagModel, GenreModel
 from django.views.generic import TemplateView, ListView
+from datetime import datetime
 
 
 class HomePageView(ListView):
@@ -20,10 +21,34 @@ class HomePageView(ListView):
 class FilmsPageView(ListView):
     model = FilmModel
     template_name = 'main/films.html'
-    paginate_by = 24
+    paginate_by = 12
+    context_object_name = 'films'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(FilmsPageView, self, **kwargs).get_context_data()
+        context['tags'] = TagModel.objects.all()
+        context['genres'] = GenreModel.objects.all()
+
+        return context
 
     def get_queryset(self):
-        film = FilmModel.objects.all().filter(movie_type='film')
-        return film
+        qs = FilmModel.objects.all().filter(movie_type='film')
+        return qs
 
 
+class CartoonPageView(ListView):
+    model = FilmModel
+    template_name = 'main/cartoons.html'
+    paginate_by = 12
+    context_object_name = 'films'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CartoonPageView, self, **kwargs).get_context_data()
+        context['tags'] = TagModel.objects.all()
+        context['genres'] = GenreModel.objects.all()
+
+        return context
+
+    def get_queryset(self):
+        qs = FilmModel.objects.all().filter(movie_type='cartoon')
+        return qs
