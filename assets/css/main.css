@@ -353,7 +353,7 @@ option {
     }
 
     .banners {
-        height: 450px !important;
+        height: 400px !important;
     }
 
     .footer p, a {
@@ -400,4 +400,9 @@ option {
     .form-inputs {
         font-size: 22px;
     }
+
+    .contact-icons {
+    width: 30px;
+    height: 30px;
+}
 }

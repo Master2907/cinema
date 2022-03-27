@@ -63,16 +63,18 @@
                     <a class="nav-link {% if request.path == current_path %}active{% endif %}"
                        href="{% url 'pages:films' %}">Films</a>
                 </li>
-            {% url 'pages:cartoon' as current_path %}
+                {% url 'pages:cartoon' as current_path %}
                 <li class="nav-item">
-                    <a class="nav-link {% if request.path == current_path %}active{% endif %}" href="{% url 'pages:cartoon' %}">Cartoons</a>
+                    <a class="nav-link {% if request.path == current_path %}active{% endif %}"
+                       href="{% url 'pages:cartoon' %}">Cartoons</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 px-5 px-lg-0">
-                <form class="d-flex mx-3 py-2 px-5 px-lg-0">
-                    <input class="form-control me-2 " type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex mx-3 py-2 px-5 px-lg-0" action="{% url 'pages:search' %}">
+                    <input class="form-control me-2" value="{{ request.GET.q }}" name="q" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
+
                 {#                <li class="nav-item d-none d-lg-block py-2">#}
                 {#                    <a href="./registration.html">#}
                 {#                        <button class="btn btn-outline-success">Sign in</button>#}
@@ -108,14 +110,14 @@
 {% endblock %}
 
 <!-- FOOTER START -->
-<div class="container-fluid container-lg mt-5 pt-5 p-0">
+<div class="container-fluid container-lg px-5 px-lg-0 mt-5 pt-5 p-0">
     <div class="row footer justify-content-between p-5">
         <div class="col-3 col-md-3 col-lg-4 ">
             <p class="d-flex justify-content-center">Contact Us</p>
             <hr>
             <div class="d-flex justify-content-center">
                 <a href="https://www.instagram.com/master_2292">
-                    <img class="contact-icons" src="{% static 'img/instagram-icon.svg' %}" alt="">
+                    <img class="contact-icons" src="{% static 'img/instagram-icon.png' %}" alt="">
                 </a>
                 <a href="https://www.facebook.com/" class="ms-3">
                     <img class="contact-icons" src="{% static 'img/facebook-icon.png' %}" alt="">
@@ -132,9 +134,9 @@
             <p class="m-0 d-flex justify-content-center">Watch</p>
             <hr>
             <div class="d-flex justify-content-center flex-column align-items-center">
-                <a href="#" class="film-name">films</a>
-                <a href="#" class="film-name">Series</a>
-                <a href="#" class="film-name">cartoons</a>
+                <a href="{% url 'pages:home' %}" class="film-name">home</a>
+                <a href="{% url 'pages:films' %}" class="film-name">films</a>
+                <a href="{% url 'pages:cartoon' %}" class="film-name">cartoons</a>
             </div>
         </div>
         <div class="col-3 offset-1">

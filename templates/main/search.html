@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- BODY START  -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 col-md-10 col-lg-8 offset-md-1 offset-lg-2 ">
+                <h1 class="text-white d-flex justify-content-center py-2">Look for anything</h1>
+                <form class="d-flex mx-0 mx-lg-5 py-2 px-lg-0" action="{% url 'pages:search' %}">
+                    <input class="form-control me-2" value="{{ request.GET.q }}" name="q" type="search"
+                           placeholder="Search"
+                           aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <!-- FILM CARDS START -->
+        <div class="row">
+            {% if object_list %}
+                {% for film in object_list %}
+                    <div class="col-4 col-lg-3 col-xl-2 mt-5">
+                        <div class="film-cards position-relative my-3">
+                            <div class="film-card-in-div d-none position-absolute w-100 h-100">
+                                <div class="film-d-in-div w-100 position-absolute">
+                                    <p class="m-0 mx-2">{{ film.year }}:</p>
+                                    <p class="m-0 mx-2">{% for genre in film.genre.all %}
+                                        {{ genre|title }},
+                                    {% endfor %}</p>
+                                </div>
+                                <div class="px-2 py-1 position-absolute watch-card-button w-100">
+                                    <a href="#" class="btn btn-primary p-1 w-100">
+                                        <p class="m-0">Watch</p>
+                                    </a>
+                                </div>
+                            </div>
+                            <img src="{{ film.image.url }}" class="mb-1 h-100 w-100 img-fluid" alt="">
+                            <a href="#" class=" film-name">
+                                <p class="ps-1">{{ film.name }}</p>
+                            </a>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            {% else %}
+                <div class="col-12 py-3 pb-5 py-lg-5 mb-lg-5">
+                    <h3 class="text-white mx-auto d-flex justify-content-center py-lg-5 my-3 my-lg-5 mb-lg-5">Sorry there is no film named
+                        '<span class="text-primary">{{ request.GET.q }}</span>'</h3>
+                </div>
+
+            {% endif %}
+        </div>
+        <!-- FILM CARDS END -->
+        {% if page_obj.paginator.count >= 13 %}
+            <div class="row mt-5 pt-5">
+                <div class="col-12 ">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination ">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% for page in paginator.page_range %}
+                                {% if page_obj.number == page %}
+                                    <li class="page-item ms-1"><a class="page-link active"
+                                                                  href="?page={{ page }}">{{ page }}</a></li>
+                                {% elif page > page_obj.number|add:-5 and page < page_obj.number|add:5 %}
+                                    <li class="page-item ms-1"><a class="page-link"
+                                                                  href="?page={{ page }}">{{ page }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li class="page-item ms-1">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <!-- BODY END -->
+{% endblock %}

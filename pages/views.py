@@ -52,3 +52,19 @@ class CartoonPageView(ListView):
     def get_queryset(self):
         qs = FilmModel.objects.all().filter(movie_type='cartoon')
         return qs
+
+
+class SearchPageView(ListView):
+    model = FilmModel
+    template_name = 'main/search.html'
+
+    def get_queryset(self):
+        qs = FilmModel.objects.all()
+        q = self.request.GET.get('q')
+
+        if q:
+            qs = qs.filter(name__icontains=q)
+            return qs
+        else:
+            return qs
+
