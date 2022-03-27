@@ -15,27 +15,27 @@
             </div>
         </div>
         <!-- FILM CARDS START -->
-        <div class="row">
+        <div class="row justify-content-xl-center">
             {% if object_list %}
                 {% for film in object_list %}
                     <div class="col-4 col-lg-3 col-xl-2 mt-5">
                         <div class="film-cards position-relative my-3">
                             <div class="film-card-in-div d-none position-absolute w-100 h-100">
                                 <div class="film-d-in-div w-100 position-absolute">
-                                    <p class="m-0 mx-2">{{ film.year }}:</p>
+                                    <p class="m-0 mx-2 mb-1">{{ film.year }} : {{ film.age }}</p>
                                     <p class="m-0 mx-2">{% for genre in film.genre.all %}
                                         {{ genre|title }},
                                     {% endfor %}</p>
                                 </div>
                                 <div class="px-2 py-1 position-absolute watch-card-button w-100">
-                                    <a href="#" class="btn btn-primary p-1 w-100">
+                                    <a href="{% url 'pages:detail' pk=film.id %}" class="btn btn-primary p-1 w-100">
                                         <p class="m-0">Watch</p>
                                     </a>
                                 </div>
                             </div>
                             <img src="{{ film.image.url }}" class="mb-1 h-100 w-100 img-fluid" alt="">
                             <a href="#" class=" film-name">
-                                <p class="ps-1">{{ film.name }}</p>
+                                <p class="ps-1">{{ film.name|lower|capfirst }}</p>
                             </a>
                         </div>
                     </div>
@@ -50,9 +50,9 @@
             {% endif %}
         </div>
         <!-- FILM CARDS END -->
-        {% if page_obj.paginator.count >= 13 %}
-            <div class="row mt-5 pt-5">
-                <div class="col-12 ">
+        {% if page_obj.paginator.count >= 7 %}
+            <div class="row  pt-5">
+                <div class="col-12 col-lg-8 offset-lg-2 d-flex justify-content-center">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination ">
                             {% if page_obj.has_previous %}
@@ -67,7 +67,7 @@
                                 {% if page_obj.number == page %}
                                     <li class="page-item ms-1"><a class="page-link active"
                                                                   href="?page={{ page }}">{{ page }}</a></li>
-                                {% elif page > page_obj.number|add:-5 and page < page_obj.number|add:5 %}
+                                {% elif page > page_obj.number|add:-2 and page < page_obj.number|add:2 %}
                                     <li class="page-item ms-1"><a class="page-link"
                                                                   href="?page={{ page }}">{{ page }}</a></li>
                                 {% endif %}

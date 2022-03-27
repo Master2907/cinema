@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- BODY START -->
+    <div class="container-fluid container-lg px-5 px-lg-0 my-5 pb-5 ">
+        <div class="row film-detail">
+            <div class="col-12  p-5">
+                <div class="d-flex justify-content-center">
+                    <img src="{{ film.image.url }}" class="img-fluid" alt="">
+                    <div class="film-d px-5 my-auto">
+                        <p><span>Name :</span> {{ related.name|lower|capfirst }}</p>
+                        <P><span>Year :</span> {{ film.year }}</P>
+                        <p><span>Genre :</span> {% for i in film.genre.all %}{{ i|lower|capfirst }}, {% endfor %}</p>
+                        <p><span>Tags :</span> {% for j in film.tag.all %}{{ j|lower|capfirst }}, {% endfor %}</p>
+                        <p><span>Type :</span> {{ film.movie_type|capfirst }}</p>
+                        <p><span>Age :</span> {{ film.age }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="px-5">
+                <hr class="bg-primary pt-1 m-0">
+            </div>
+            <!-- DESCRIPTION START -->
+            <div class="col-12 film-description mt-4">
+                <p class="description d-flex justify-content-center">Description</p>
+                <p class="px-5">{{ film.description|lower|capfirst|slice:':700' }}
+                    <span id="dots">...</span><span id="more">
+                        {{ film.description|lower|slice:'700:' }}</span>
+                </p>
+                <button onclick="myFunction()" id="myBtn" class="read-more-button border-0 w-100 py-3 my-1">&#9660; Read
+                    more &#9660;
+                </button>
+            </div>
+        </div>
+        <!-- DESCRIPTION END -->
+        <!-- VIDEO START -->
+        <div class="row mt-3">
+            <div class="col-12 py-3 px-0 px-lg-5">
+                <video controls class="w-100 video p-0 m-0">
+                    <source src="{{ film.film_video.url }}" type="video/mp4">
+                </video>
+                <div class="d-flex mt-2 justify-content-center rating gap-3 py-3">
+                    <div class="d-flex my-auto">
+                        <p class="text-white m-0"><span class="text-primary">15</span> : LIKES</p>
+                    </div>
+                    <a href="#">
+                        <img src="{% static 'img/like.png' %}" class="img-fluid" alt="">
+                    </a>
+                    <a href="#comments">
+                        <img src="{% static 'img/leave-comment.png' %}" alt="">
+                    </a>
+                    <a href="#">
+                        <img src="{% static 'img/dislike.png' %}" alt="">
+                    </a>
+                    <div class="d-flex my-auto">
+                        <p class=" m-0 text-white">DISLIKES : <span class="text-primary">15</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- VIDEO END -->
+
+        <!-- SIMILAR FILMS START -->
+        <div class="row mt-5 mx-1">
+            <div class="col-12">
+                <a class="c-names m-3" href="#">Similar Films</a>
+                <div class="my-slickies my-3">
+                    {% for films in context.related %}
+                        <div class="slicks position-relative slick-div mx-2">
+                            <div class="slicks-inner-div position-absolute w-100 d-none">
+                                <a href="#" class="">
+                                    <img class="position-absolute" src="./img/bookmark-icon-light.png" alt="">
+                                </a>
+                                <div class="position-absolute slicks-inner-content w-100">
+                                    <div>
+                                        <p class="m-0 ms-2 text-white">2021 :</p>
+                                        <p class="m-0 mb-3 ms-2 text-white">Actions, Adventure, Adventure</p>
+                                    </div>
+                                    <div class="px-2 py-1 watch-button position-absolute w-100">
+                                        <a href="#" class="btn btn-primary p-1 w-100">
+                                            <p class="m-0">Watch</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <img src="{% static 'img/02.jpg' %}" class="slick-img w-100 h-100" alt="">
+                            <a href="#">
+                                <p class="text-white film-name mt-1 ms-1">Luca</p>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- SIMILAR FILMS END -->
+        <!-- COMMENTS START -->
+        <div class="col-12 comments p-3" id="comments">
+            <p class="text-white d-flex justify-content-center description">Comments</p>
+            <div class="px-3">
+                <hr class="bg-primary pt-1 m-0">
+            </div>
+            <div class="w-100 mt-3 px-3 gap-3 d-flex flex-column">
+                <div class="p-3 comment">
+                    <div class="d-flex">
+                        <img class="user-icon" src="./img/user-icon.jpg" alt="">
+                        <p class="text-white ms-2 my-auto">Umar Khashimov :</p>
+                    </div>
+                    <p class="text-white p-3 m-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia
+                        nostrum numquam quas quos, doloremque, aut id laboriosam nulla, tenetur corrupti iure at
+                        consectetur placeat odio. Provident iusto nesciunt nisi, tenetur accusamus ipsa? Aperiam
+                        adipisci ipsa suscipit tenetur dolor maxime nesciunt, eligendi magni obcaecati dolorem
+                        laboriosam qui, et deleniti! Beatae, veniam?</p>
+                </div>
+                <div class="p-3 comment">
+                    <div class="d-flex">
+                        <img class="user-icon" src="./img/user-icon.jpg" alt="">
+                        <p class="text-white ms-2 my-auto">Umar Khashimov :</p>
+                    </div>
+                    <p class="text-white p-3 m-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia
+                        nostrum numquam quas quos, doloremque, aut id laboriosam nulla, tenetur corrupti iure at
+                        consectetur placeat odio. Provident iusto nesciunt nisi, tenetur accusamus ipsa? Aperiam
+                        adipisci ipsa suscipit tenetur dolor maxime nesciunt, eligendi magni obcaecati dolorem
+                        laboriosam qui, et deleniti! Beatae, veniam?</p>
+                </div>
+                <div class="p-3 comment">
+                    <div class="d-flex">
+                        <img class="user-icon" src="./img/user-icon.jpg" alt="">
+                        <p class="text-white ms-2 my-auto">Umar Khashimov :</p>
+                    </div>
+                    <p class="text-white p-3 m-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium
+                        tempore pariatur illo unde eaque adipisci ut reprehenderit quis quae, voluptatibus laudantium
+                        laboriosam at accusantium molestiae porro! Odit ex dolores optio, rem blanditiis et quae harum
+                        illo. Nobis provident maiores voluptate quos magnam autem reprehenderit neque numquam. Dicta
+                        odit illum eveniet.</p>
+                </div>
+                <div class="comment d-flex">
+                    <input placeholder="Leave Comment" type="text" class="comment-input w-100 p-2 bg-transparent">
+                    <button type="submit" class="h-100 btn btn-outline-primary p-3">Submit</button>
+                </div>
+            </div>
+        </div>
+        <!-- COMMENTS END -->
+    </div>
+    <!-- BODY END -->
+{% endblock %}

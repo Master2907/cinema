@@ -12,9 +12,11 @@
                         <div class="d-flex justify-content-end justify-content-lg-around me-4 me-lg-0">
                             <div class="d-flex">
                                 <p class="my-1 me-2">Genre :</p>
-                                <select class="form-select selections" aria-label="Default select example">
+                                <select name="genre" class="form-select selections"
+                                        onchange="getParamSearch('genre', this.value)">
+                                        <option value="">---</option>
                                     {% for genre in genres %}
-                                        <option value="{{ genre }}">{{ genre }}</option>
+                                        <option {% if request.GET.genre == genre.name %}selected{% endif %} value="{{ genre.name }}">{{ genre.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -26,9 +28,12 @@
                         <div class="d-flex justify-content-center justify-content-lg-around">
                             <div class=" d-flex">
                                 <p class="my-1 me-2">Year :</p>
-                                <select class="form-select selections" aria-label="Default select example">
-                                    {% for i in object_list %}
-                                        <option value="{{ i.year }}">{{ i.year }}</option>
+                                <select name="year" class="form-select selections"
+                                        onchange="getParamSearch('year', this.value)">
+                                <option value="">---</option>
+                                    {% for year in years %}
+                                        <option {% if request.GET.year == year.year %}selected{% endif %} value="{{ year.year }}">{{ year.year }}</option>
+
                                     {% endfor %}
                                 </select>
                             </div>
@@ -40,9 +45,11 @@
                         <div class="d-flex justify-content-end justify-content-lg-around mt-3 mt-lg-0 me-4 me-lg-0">
                             <div class="d-flex">
                                 <p class="my-1 me-2">Tag :</p>
-                                <select class="form-select selections">
+                                <select name="tag" class="form-select selections"
+                                        onchange="getParamSearch('tag', this.value)">
+                                <option value="">---</option>
                                     {% for tag in tags %}
-                                        <option value="{{ tag }}">{{ tag }}</option>
+                                        <option {% if request.GET.tag == tag.name %}selected{% endif %} value="{{ tag.name }}">{{ tag }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -69,29 +76,35 @@
 
         <!-- FILM CARDS START -->
         <div class="row ">
+            {% if object_list %}
             {% for film in object_list %}
                 <div class="col-4 col-lg-3 col-xl-2 mt-5">
                     <div class="film-cards position-relative my-3">
                         <div class="film-card-in-div d-none position-absolute w-100 h-100">
                             <div class="film-d-in-div w-100 position-absolute">
-                                <p class="m-0 mx-2">{{ film.year }}:</p>
+                                <p class="m-0 mx-2 mb-1">{{ film.year }} : {{ film.age }}</p>
                                 <p class="m-0 mx-2">{% for genre in film.genre.all %}
-                                    {{ genre|title }},
+                                    {{ genre|lower|capfirst }},
                                 {% endfor %}</p>
                             </div>
                             <div class="px-2 py-1 position-absolute watch-card-button w-100">
-                                <a href="#" class="btn btn-primary p-1 w-100">
+                                <a href="{% url 'pages:watch' pk=film.pk %}" class="btn btn-primary p-1 w-100">
                                     <p class="m-0">Watch</p>
                                 </a>
                             </div>
                         </div>
                         <img src="{{ film.image.url }}" class="mb-1 h-100 w-100 img-fluid" alt="">
                         <a href="#" class=" film-name">
-                            <p class="ps-1">{{ film.name }}</p>
+                            <p class="ps-1">{{ film.name|lower|capfirst }}</p>
                         </a>
                     </div>
                 </div>
             {% endfor %}
+            {% else %}
+                <div class="col-12 d-flex justify-content-center">
+                    <h3 class="text-white py-3 my-5">Sorry there is no cartoon with this parameters</h3>
+                </div>
+            {% endif %}
 
             <!-- FILM CARDS END -->
             {% if page_obj.paginator.count >= 13 %}

@@ -23,7 +23,9 @@ urlpatterns = [
     path('', include('pages.urls')),
     path('films/', include('pages.urls')),
     path('cartoons/', include('pages.urls')),
-    path('search', include('pages.urls'))
+    path('search', include('pages.urls')),
+    path('watch/', include('pages.urls')),
+    path('<int:pk>/watch/', include('pages.urls'), name='watch')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

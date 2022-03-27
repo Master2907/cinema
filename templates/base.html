@@ -70,10 +70,14 @@
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 px-5 px-lg-0">
-                <form class="d-flex mx-3 py-2 px-5 px-lg-0" action="{% url 'pages:search' %}">
-                    <input class="form-control me-2" value="{{ request.GET.q }}" name="q" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit">Search</button>
-                </form>
+                {% url 'pages:search' as searching %}
+                {% if request.path != searching %}
+                    <form class="d-flex mx-3 py-2 px-5 px-lg-0" action="{% url 'pages:search' %}">
+                        <input class="form-control me-2" value="{{ request.GET.q }}" name="q" type="search"
+                               placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                    </form>
+                {% endif %}
 
                 {#                <li class="nav-item d-none d-lg-block py-2">#}
                 {#                    <a href="./registration.html">#}

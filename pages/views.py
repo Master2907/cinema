@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from films.models import FilmModel, BannerModel, TagModel, GenreModel
-from django.views.generic import TemplateView, ListView
+from django.views.generic import DetailView, ListView
 from datetime import datetime
 
 
@@ -10,8 +10,8 @@ class HomePageView(ListView):
 
     def get_context_data(self, *args, object_list=None, **kwargs):
         context = super(HomePageView, self, *args, **kwargs).get_context_data()
-        context['banners'] = BannerModel.objects.all()
-        context['adventure'] = FilmModel.objects.all().filter(genre__name='Adventure')
+        context['banners'] = BannerModel.objects.all().order_by('-id')[:4]
+        context['all_films'] = FilmModel.objects.all().order_by('name')
         context['type_film'] = FilmModel.objects.all().filter(movie_type='film')
         context['type_cartoon'] = FilmModel.objects.all().filter(movie_type='cartoon')
 
@@ -28,11 +28,25 @@ class FilmsPageView(ListView):
         context = super(FilmsPageView, self, **kwargs).get_context_data()
         context['tags'] = TagModel.objects.all()
         context['genres'] = GenreModel.objects.all()
+        context['years'] = FilmModel.objects.all()
 
         return context
 
     def get_queryset(self):
         qs = FilmModel.objects.all().filter(movie_type='film')
+
+        genre = self.request.GET.get('genre')
+        if genre:
+            qs = qs.filter(genre__name=genre)
+
+        year = self.request.GET.get('year')
+        if year:
+            qs = qs.filter(year=year)
+
+        tag = self.request.GET.get('tag')
+        if tag:
+            qs = qs.filter(tag__name=tag)
+
         return qs
 
 
@@ -46,17 +60,32 @@ class CartoonPageView(ListView):
         context = super(CartoonPageView, self, **kwargs).get_context_data()
         context['tags'] = TagModel.objects.all()
         context['genres'] = GenreModel.objects.all()
+        context['years'] = FilmModel.objects.all()
 
         return context
 
     def get_queryset(self):
         qs = FilmModel.objects.all().filter(movie_type='cartoon')
+
+        genre = self.request.GET.get('genre')
+        if genre:
+            qs = qs.filter(genre__name=genre)
+
+        year = self.request.GET.get('year')
+        if year:
+            qs = qs.filter(year=year)
+
+        tag = self.request.GET.get('tag')
+        if tag:
+            qs = qs.filter(tag__name=tag)
+
         return qs
 
 
 class SearchPageView(ListView):
     model = FilmModel
     template_name = 'main/search.html'
+    paginate_by = 6
 
     def get_queryset(self):
         qs = FilmModel.objects.all()
@@ -68,3 +97,8 @@ class SearchPageView(ListView):
         else:
             return qs
 
+
+class FilmDetailView(DetailView):
+    model = FilmModel
+    template_name = 'main/film-detail.html'
+    context_object_name = 'film'
