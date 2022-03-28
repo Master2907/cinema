@@ -55,12 +55,15 @@ class CartoonPageView(ListView):
     template_name = 'main/cartoons.html'
     paginate_by = 12
     context_object_name = 'films'
+    m_list = []
+    for i in range(1, 100 + 1):
+        m_list.append(i)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CartoonPageView, self, **kwargs).get_context_data()
         context['tags'] = TagModel.objects.all()
         context['genres'] = GenreModel.objects.all()
-        context['years'] = set(FilmModel.objects.all())
+        context['years'] = FilmModel.objects.all()
 
         return context
 

@@ -33,7 +33,6 @@
                                 <option value="">---</option>
                                     {% for year in years %}
                                         <option {% if request.GET.year == year.year %}selected{% endif %} value="{{ year.year }}">{{ year.year }}</option>
-
                                     {% endfor %}
                                 </select>
                             </div>
