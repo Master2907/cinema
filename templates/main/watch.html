@@ -71,10 +71,10 @@
                                 <div class="position-absolute slicks-inner-content w-100">
                                     <div>
                                         <p class="m-0 ms-2 text-white">{{ films.year }} :</p>
-                                        <p class="m-0 mb-3 ms-2 text-white">{{ film.genre }}</p>
+                                        <p class="m-0 mb-3 ms-1 text-white">{% for genre in films.genre.all%}{{ genre }}, {% endfor %}</p>
                                     </div>
                                     <div class="px-2 py-1 watch-button position-absolute w-100">
-                                        <a href="#" class="btn btn-primary p-1 w-100">
+                                        <a href="{% url 'pages:watch' pk=film.id %}" class="btn btn-primary p-1 w-100">
                                             <p class="m-0">Watch</p>
                                         </a>
                                     </div>
@@ -90,7 +90,7 @@
             </div>
         </div>
         <!-- SIMILAR FILMS END -->
-    {{ related }}
+{#        <div class="text-white py-5">{{ related }}</div>#}
         <!-- COMMENTS START -->
         <div class="col-12 comments p-3" id="comments">
             <p class="text-white d-flex justify-content-center description">Comments</p>

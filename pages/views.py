@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from films.models import FilmModel, BannerModel, TagModel, GenreModel
 from django.views.generic import DetailView, ListView
-from datetime import datetime
+from django.shortcuts import render, redirect, get_object_or_404
 
 
 class HomePageView(ListView):
@@ -60,7 +60,7 @@ class CartoonPageView(ListView):
         context = super(CartoonPageView, self, **kwargs).get_context_data()
         context['tags'] = TagModel.objects.all()
         context['genres'] = GenreModel.objects.all()
-        context['years'] = FilmModel.objects.all()
+        context['years'] = set(FilmModel.objects.all())
 
         return context
 
@@ -104,9 +104,8 @@ class SearchPageView(ListView):
 #     context_object_name = 'film'
 
 def film_watch(request, pk):
-    film = FilmModel.objects.get(id=pk)
-    tag = FilmModel.objects.all().filter(tag__filmmodel__name=film.tag.name)
+    film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
     return render(request, 'main/watch.html', context={
         'film': film,
-        'related': FilmModel.objects.all().filter(year=film.year).exclude(id=film.id)
+        'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all())),
     })
