@@ -8,7 +8,7 @@
                 <div class="d-flex justify-content-center">
                     <img src="{{ film.image.url }}" class="img-fluid" alt="">
                     <div class="film-d px-5 my-auto">
-                        <p><span>Name :</span> {{ related.name|lower|capfirst }}</p>
+                        <p><span>Name :</span> {{ film.name|lower|capfirst }}</p>
                         <P><span>Year :</span> {{ film.year }}</P>
                         <p><span>Genre :</span> {% for i in film.genre.all %}{{ i|lower|capfirst }}, {% endfor %}</p>
                         <p><span>Tags :</span> {% for j in film.tag.all %}{{ j|lower|capfirst }}, {% endfor %}</p>
@@ -65,16 +65,13 @@
             <div class="col-12">
                 <a class="c-names m-3" href="#">Similar Films</a>
                 <div class="my-slickies my-3">
-                    {% for films in context.related %}
+                    {% for films in related %}
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
-                                <a href="#" class="">
-                                    <img class="position-absolute" src="./img/bookmark-icon-light.png" alt="">
-                                </a>
                                 <div class="position-absolute slicks-inner-content w-100">
                                     <div>
-                                        <p class="m-0 ms-2 text-white">2021 :</p>
-                                        <p class="m-0 mb-3 ms-2 text-white">Actions, Adventure, Adventure</p>
+                                        <p class="m-0 ms-2 text-white">{{ films.year }} :</p>
+                                        <p class="m-0 mb-3 ms-2 text-white">{{ film.genre }}</p>
                                     </div>
                                     <div class="px-2 py-1 watch-button position-absolute w-100">
                                         <a href="#" class="btn btn-primary p-1 w-100">
@@ -83,9 +80,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <img src="{% static 'img/02.jpg' %}" class="slick-img w-100 h-100" alt="">
+                            <img src="{{ films.image.url }}" class="slick-img w-100 h-100" alt="">
                             <a href="#">
-                                <p class="text-white film-name mt-1 ms-1">Luca</p>
+                                <p class="text-white film-name mt-1 ms-1">{{ films.name|lower|capfirst }}</p>
                             </a>
                         </div>
                     {% endfor %}
@@ -93,6 +90,7 @@
             </div>
         </div>
         <!-- SIMILAR FILMS END -->
+    {{ related }}
         <!-- COMMENTS START -->
         <div class="col-12 comments p-3" id="comments">
             <p class="text-white d-flex justify-content-center description">Comments</p>

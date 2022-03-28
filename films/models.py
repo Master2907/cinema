@@ -51,7 +51,7 @@ class FilmModel(models.Model):
     name = models.CharField(max_length=30, verbose_name=_("name"))
     image = models.ImageField(upload_to='films', verbose_name=_("image"))
     film_video = models.FileField(upload_to="film", verbose_name=_("film video"))
-    description = models.TextField(max_length=2000, verbose_name=_("description"))
+    description = models.TextField(max_length=3000, verbose_name=_("description"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
     genre = models.ManyToManyField(GenreModel, verbose_name=_("genre"))
     tag = models.ManyToManyField(TagModel, verbose_name=_("tag"))

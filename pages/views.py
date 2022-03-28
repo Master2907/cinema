@@ -98,7 +98,15 @@ class SearchPageView(ListView):
             return qs
 
 
-class FilmDetailView(DetailView):
-    model = FilmModel
-    template_name = 'main/film-detail.html'
-    context_object_name = 'film'
+# class FilmDetailView(DetailView):
+#     model = FilmModel
+#     template_name = 'main/watch.html'
+#     context_object_name = 'film'
+
+def film_watch(request, pk):
+    film = FilmModel.objects.get(id=pk)
+    tag = FilmModel.objects.all().filter(tag__filmmodel__name=film.tag.name)
+    return render(request, 'main/watch.html', context={
+        'film': film,
+        'related': FilmModel.objects.all().filter(year=film.year).exclude(id=film.id)
+    })

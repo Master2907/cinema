@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import HomePageView, FilmsPageView, CartoonPageView, SearchPageView, FilmDetailView
+from .views import HomePageView, FilmsPageView, CartoonPageView, SearchPageView, film_watch
 
 app_name = 'pages'
 
@@ -8,6 +8,6 @@ urlpatterns = [
     path('films/', FilmsPageView.as_view(), name='films'),
     path('cartoons/', CartoonPageView.as_view(), name='cartoon'),
     path('search/', SearchPageView.as_view(), name='search'),
-    path('<int:pk>/watch/', FilmDetailView.as_view(), name='watch'),
+    path('<int:pk>/watch/', film_watch, name='watch'),
 
 ]
