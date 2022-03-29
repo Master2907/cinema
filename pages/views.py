@@ -101,11 +101,6 @@ class SearchPageView(ListView):
             return qs
 
 
-# class FilmDetailView(DetailView):
-#     model = FilmModel
-#     template_name = 'main/watch.html'
-#     context_object_name = 'film'
-
 def film_watch(request, pk):
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
     return render(request, 'main/watch.html', context={
