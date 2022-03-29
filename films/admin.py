@@ -32,3 +32,8 @@ class BannerModelAdmin(admin.ModelAdmin):
     list_display_links = ['id', 'name']
     search_fields = ['name']
     list_filter = ['created_at']
+
+
+@admin.register(YearModel)
+class BannerModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'year']

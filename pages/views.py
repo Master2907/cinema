@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from films.models import FilmModel, BannerModel, TagModel, GenreModel
+from films.models import FilmModel, BannerModel, TagModel, GenreModel, YearModel
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -28,7 +28,7 @@ class FilmsPageView(ListView):
         context = super(FilmsPageView, self, **kwargs).get_context_data()
         context['tags'] = TagModel.objects.all()
         context['genres'] = GenreModel.objects.all()
-        context['years'] = FilmModel.objects.all()
+        context['years'] = YearModel.objects.all()
 
         return context
 
@@ -37,15 +37,15 @@ class FilmsPageView(ListView):
 
         genre = self.request.GET.get('genre')
         if genre:
-            qs = qs.filter(genre__name=genre)
+            qs = qs.filter(genre__id=genre)
 
         year = self.request.GET.get('year')
         if year:
-            qs = qs.filter(year=year)
+            qs = qs.filter(year__year=year)
 
         tag = self.request.GET.get('tag')
         if tag:
-            qs = qs.filter(tag__name=tag)
+            qs = qs.filter(tag__id=tag)
 
         return qs
 
@@ -63,7 +63,7 @@ class CartoonPageView(ListView):
         context = super(CartoonPageView, self, **kwargs).get_context_data()
         context['tags'] = TagModel.objects.all()
         context['genres'] = GenreModel.objects.all()
-        context['years'] = FilmModel.objects.all()
+        context['years'] = YearModel.objects.all()
 
         return context
 
@@ -72,15 +72,15 @@ class CartoonPageView(ListView):
 
         genre = self.request.GET.get('genre')
         if genre:
-            qs = qs.filter(genre__name=genre)
+            qs = qs.filter(genre__id=genre)
 
         year = self.request.GET.get('year')
         if year:
-            qs = qs.filter(year=year)
+            qs = qs.filter(year__year=year)
 
         tag = self.request.GET.get('tag')
         if tag:
-            qs = qs.filter(tag__name=tag)
+            qs = qs.filter(tag__id=tag)
 
         return qs
 

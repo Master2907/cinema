@@ -9,5 +9,4 @@ urlpatterns = [
     path('cartoons/', CartoonPageView.as_view(), name='cartoon'),
     path('search/', SearchPageView.as_view(), name='search'),
     path('<int:pk>/watch/', film_watch, name='watch'),
-
 ]

@@ -15,7 +15,7 @@
                                         onchange="getParamSearch('genre', this.value)">
                                         <option value="">---</option>
                                     {% for genre in genres %}
-                                        <option {% if request.GET.genre == genre.name %}selected{% endif %} value="{{ genre.name }}">{{ genre.name }}</option>
+                                        <option {% if request.GET.genre == genre.id|stringformat:'i' %}selected{% endif %} value="{{ genre.id }}">{{ genre.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -31,7 +31,7 @@
                                         onchange="getParamSearch('year', this.value)">
                                 <option value="">---</option>
                                     {% for year in years %}
-                                        <option {% if request.GET.year == year.year %}selected{% endif %} value="{{ year.year }}">{{ year.year }}</option>
+                                        <option {% if request.GET.year == year.year|stringformat:'i' %}selected{% endif %} value="{{ year.year }}">{{ year.year }}</option>
 
                                     {% endfor %}
                                 </select>
@@ -48,7 +48,7 @@
                                         onchange="getParamSearch('tag', this.value)">
                                 <option value="">---</option>
                                     {% for tag in tags %}
-                                        <option {% if request.GET.tag == tag.name %}selected{% endif %} value="{{ tag.name }}">{{ tag }}</option>
+                                        <option {% if request.GET.tag == tag.id|stringformat:'i' %}selected{% endif %} value="{{ tag.id }}">{{ tag.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -100,7 +100,7 @@
             {% endfor %}
             {% else %}
                 <div class="col-12 d-flex justify-content-center">
-                    <h3 class="text-white py-3 my-5">Sorry there is no film with this parameters</h3>
+                    <h3 class="text-white py-3 my-5">Sorry, there is no film with this parameters.</h3>
                 </div>
             {% endif %}
         </div>

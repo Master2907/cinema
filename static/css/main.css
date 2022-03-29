@@ -253,6 +253,10 @@ option {
     height: 400px;
 }
 
+.account-link:hover {
+    color: #ffffff !important;
+}
+
 .film-d {
     color: #ffffff;
     font-family: Adamina;

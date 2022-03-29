@@ -25,7 +25,8 @@ urlpatterns = [
     path('cartoons/', include('pages.urls')),
     path('search', include('pages.urls')),
     path('watch/', include('pages.urls')),
-    path('<int:pk>/watch/', include('pages.urls'), name='watch')
+    path('<int:pk>/watch/', include('pages.urls'), name='watch'),
+    path('accounts/', include('registration.backends.default.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
