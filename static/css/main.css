@@ -352,6 +352,10 @@ option {
 }
 
 @media (max-width: 991px) {
+    .brand-name {
+        font-size: 40px !important;
+    }
+
     .nav-link {
         font-size: 20px;
     }

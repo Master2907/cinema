@@ -81,7 +81,7 @@
                                             {% for genre in films.genre.all %}{{ genre }}, {% endfor %}</p>
                                     </div>
                                     <div class="px-2 py-1 watch-button position-absolute w-100">
-                                        <a href="{% url 'pages:watch' pk=film.id %}" class="btn btn-primary p-1 w-100">
+                                        <a href="{% url 'pages:watch' pk=films.id %}" class="btn btn-primary p-1 w-100">
                                             <p class="m-0">Watch</p>
                                         </a>
                                     </div>

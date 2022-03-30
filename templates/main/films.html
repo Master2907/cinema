@@ -2,9 +2,9 @@
 {% load static %}
 {% block content %}
     <!-- BODY START  -->
-    <div class="container mt-5">
+    <div class="container-fluid px-5 mt-5">
         <!-- FILTER START -->
-        <div class="row my-3 filter-div py-4 px-5">
+        <div class="row my-3 filter-div mx-5 py-4 px-5">
             <div class="row px-2">
                 <div class="col-6 col-lg-3 px-0">
                     <div class="w-100 ">
@@ -73,7 +73,7 @@
         <!-- FILTER END -->
 
         <!-- FILM CARDS START -->
-        <div class="row ">
+        <div class="row mx-5">
         {% if object_list %}
             {% for film in object_list %}
                 <div class="col-4 col-lg-3 col-xl-2 mt-5">
