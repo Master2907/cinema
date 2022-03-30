@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
     <!-- BODY START  -->
-    <div class="container mt-5">
+    <div class="container pb-5 mt-5">
         <div class="row">
             <div class="col-12 col-md-10 col-lg-8 offset-md-1 offset-lg-2 ">
                 <h1 class="text-white d-flex justify-content-center py-2">Look for anything</h1>
@@ -22,7 +22,7 @@
                         <div class="film-cards position-relative my-3">
                             <div class="film-card-in-div d-none position-absolute w-100 h-100">
                                 <div class="film-d-in-div w-100 position-absolute">
-                                    <p class="m-0 mx-2 mb-1">{{ film.year }} : {{ film.age }}</p>
+                                    <p class="m-0 mx-2 mb-1">{{ film.year }} : {{ film.movie_type }}</p>
                                     <p class="m-0 mx-2">{% for genre in film.genre.all %}
                                         {{ genre|title }},
                                     {% endfor %}</p>
@@ -35,7 +35,7 @@
                             </div>
                             <img src="{{ film.image.url }}" class="mb-1 h-100 w-100 img-fluid" alt="">
                             <a href="#" class=" film-name">
-                                <p class="ps-1">{{ film.name|lower|capfirst }}</p>
+                                <p class="ps-1">{% if film.name|length > 35 %}{{ film.name|lower|capfirst|slice:'35' }}...{% else %}{{ film.name|lower|capfirst }}{% endif %}</p>
                             </a>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                                 {% if page_obj.number == page %}
                                     <li class="page-item ms-1"><a class="page-link active"
                                                                   href="?page={{ page }}">{{ page }}</a></li>
-                                {% elif page > page_obj.number|add:-2 and page < page_obj.number|add:2 %}
+                                {% elif page > page_obj.number|add:-4 and page < page_obj.number|add:4 %}
                                     <li class="page-item ms-1"><a class="page-link"
                                                                   href="?page={{ page }}">{{ page }}</a></li>
                                 {% endif %}

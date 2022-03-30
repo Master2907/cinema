@@ -93,7 +93,6 @@ class SearchPageView(ListView):
     def get_queryset(self):
         qs = FilmModel.objects.all()
         q = self.request.GET.get('q')
-
         if q:
             qs = qs.filter(name__icontains=q)
             return qs
@@ -105,5 +104,5 @@ def film_watch(request, pk):
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
     return render(request, 'main/watch.html', context={
         'film': film,
-        'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all())),
+        'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all()).exclude(id=pk)),
     })

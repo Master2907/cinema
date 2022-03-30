@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
     <!-- BODY START  -->
-    <div class="container-fluid px-5 mt-5">
+    <div class="container-fluid px-5 pb-5 mt-5">
         <!-- FILTER START -->
         <div class="row my-3 filter-div mx-5 py-4 px-5">
             <div class="row px-2">
@@ -93,7 +93,7 @@
                         </div>
                         <img src="{{ film.image.url }}" class="mb-1 h-100 w-100 img-fluid" alt="">
                         <a href="#" class=" film-name">
-                            <p class="ps-1">{{ film.name|lower|capfirst }}</p>
+                            <p class="ps-1">{% if film.name|length > 35 %}{{ film.name|lower|capfirst|slice:'35' }}...{% else %}{{ film.name|lower|capfirst }}{% endif %}</p>
                         </a>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
             <!-- FILM CARDS END -->
             {% if page_obj.paginator.count >= 13 %}
                 <div class="row mt-5 pt-5">
-                    <div class="col-12 ">
+                    <div class="col-12 d-flex justify-content-center">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination ">
                                 {% if page_obj.has_previous %}

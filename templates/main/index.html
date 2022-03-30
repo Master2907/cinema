@@ -120,7 +120,7 @@
                                 </div>
                                 <img src="{{ film.image.url }}" class="slick-img w-100 h-100" alt="">
                                 <a href="#">
-                                    <p class="text-white film-name mt-1 ms-1">{{ film.name|lower|capfirst }}</p>
+                                    <p class="ps-1">{% if film.name|length > 40 %}{{ film.name|lower|capfirst|slice:'40' }}...{% else %}{{ film.name|lower|capfirst }}{% endif %}</p>
                                 </a>
                             </div>
                         {% endfor %}
