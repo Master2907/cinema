@@ -88,7 +88,7 @@ class CartoonPageView(ListView):
 class SearchPageView(ListView):
     model = FilmModel
     template_name = 'main/search.html'
-    paginate_by = 6
+    paginate_by = 12
 
     def get_queryset(self):
         qs = FilmModel.objects.all()

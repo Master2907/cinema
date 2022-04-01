@@ -4,12 +4,12 @@
 {% block title %}{% trans "Account Activated" %}{% endblock %}
 
 {% block content %}
-<h2 class="d-flex justify-content-center text-white mt-5">
+<p>
     {% trans "Your account is now activated." %}
     {% if not user.is_authenticated %}
-    {% trans "You can log in." %}
+    {% trans "Once a site administrator activates your account you can login." %}
     {% endif %}
-</h2>
+</p>
 {% endblock %}
 
 

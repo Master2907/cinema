@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -149,3 +150,16 @@ try:
     from .local_settings import *
 except ImportError:
     pass
+
+
+ACCOUNT_ACTIVATION_DAYS = 7
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'umar.cinema.uz@gmail.com'
+EMAIL_HOST_PASSWORD = 'cinemauz123'
