@@ -82,7 +82,7 @@ class FilmModel(models.Model):
 
 class BannerModel(models.Model):
     name = models.CharField(max_length=50, verbose_name=_('name'))
-    banner_img = models.ImageField(upload_to='banners', verbose_name=_('banner img'))
+    banner_img = models.ImageField(upload_to=UploadTo('banners'), verbose_name=_('banner img'))
     film = models.ForeignKey(FilmModel, on_delete=models.PROTECT, verbose_name=_('film'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created at'))
 
