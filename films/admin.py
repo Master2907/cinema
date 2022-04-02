@@ -37,3 +37,4 @@ class BannerModelAdmin(admin.ModelAdmin):
 @admin.register(YearModel)
 class BannerModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'year']
+

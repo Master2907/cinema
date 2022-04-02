@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from films.models import FilmModel, BannerModel, TagModel, GenreModel, YearModel
+from comments.models import CommentModel
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render, redirect, get_object_or_404
-
+from comments.forms import CommentForm
 
 class HomePageView(ListView):
     model = FilmModel
@@ -28,7 +29,7 @@ class FilmsPageView(ListView):
         context = super(FilmsPageView, self, **kwargs).get_context_data()
         context['tags'] = TagModel.objects.all()
         context['genres'] = GenreModel.objects.all()
-        context['years'] = YearModel.objects.all()
+        context['years'] = YearModel.objects.all().order_by('-year')
 
         return context
 
@@ -55,15 +56,12 @@ class CartoonPageView(ListView):
     template_name = 'main/cartoons.html'
     paginate_by = 12
     context_object_name = 'films'
-    m_list = []
-    for i in range(1, 100 + 1):
-        m_list.append(i)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CartoonPageView, self, **kwargs).get_context_data()
         context['tags'] = TagModel.objects.all()
         context['genres'] = GenreModel.objects.all()
-        context['years'] = YearModel.objects.all()
+        context['years'] = YearModel.objects.all().order_by('-year')
 
         return context
 
@@ -102,7 +100,21 @@ class SearchPageView(ListView):
 
 def film_watch(request, pk):
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
+    comments = CommentModel.objects.all().filter(film_id=pk)
+    form = CommentForm
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            comment = request.POST.get('comment')
+            CommentModel.objects.create(user=user, film=film, comment=comment)
+    else:
+        form = CommentForm()
+
     return render(request, 'main/watch.html', context={
         'film': film,
+        'comments': comments,
+        'form': form,
         'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all()).exclude(id=pk)),
     })

@@ -28,8 +28,9 @@
                         {{ request.user.username }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#"><img alt="" class="nav-icon me-2"
-                                                                   src="{% static 'img/account-icon.png' %}">Account</a>
+                        <li><a class="dropdown-item" href="{% url 'auth_password_change' %}"><img alt=""
+                                                                                                  class="nav-icon me-2"
+                                                                                                  src="{% static 'img/change-password-icon.png' %}">Change</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -40,7 +41,7 @@
                         </li>
                     </ul>
                 </li>
-                    {% else %}
+            {% else %}
 
                 <li class="nav-item d-block d-lg-none py-1 me-3">
                     <a href="{% url 'auth_login' %}">
@@ -87,29 +88,32 @@
 
                 {% if request.user.is_authenticated %}
                     <li class="nav-item dropdown d-none d-lg-block">
-                    <a class="nav-link text-white btn dropdown-toggle my-2" href="#"
-                       id="navbarDarkDropdownMenuLink" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ request.user.username|title }}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                    <li><a class="dropdown-item" href="{% url 'auth_password_change' %}"><img alt="" class="nav-icon me-2"
-                                                               src="{% static 'img/change-password-icon.png' %}">Change password</a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="{% url 'auth_logout' %}"><img alt="" class="nav-icon ms-1 me-2"
-                                                                                     src="{% static 'img/logout-icon.png' %}">Logout</a>
-                    </li>
-                {% else %}
+                        <a class="nav-link text-white btn dropdown-toggle my-2" href="#"
+                           id="navbarDarkDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ request.user.username|title }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{% url 'auth_password_change' %}"><img alt=""
+                                                                                                      class="nav-icon me-2"
+                                                                                                      src="{% static 'img/change-password-icon.png' %}">Change</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'auth_logout' %}"><img alt=""
+                                                                                             class="nav-icon ms-1 me-2"
+                                                                                             src="{% static 'img/logout-icon.png' %}">Logout</a>
+                            </li>
+                        </ul>
+                        {% else %}
                     <li class="nav-item d-none d-lg-block py-2">
                         <a href="{% url 'auth_login' %}">
                             <button class="btn btn-outline-success">Log in</button>
                         </a>
                     </li>
                 {% endif %}
-                </ul>
+
         </div>
     </div>
 </nav>

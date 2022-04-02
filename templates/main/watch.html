@@ -29,12 +29,13 @@
                         {{ film.description|lower|slice:'700:' }}</span>
                     </p>
 
-                <button onclick="myFunction()" id="myBtn" class="read-more-button border-0 w-100 py-3 my-1">&#9660; Read
-                    more &#9660;
-                </button>
+                    <button onclick="myFunction()" id="myBtn" class="read-more-button border-0 w-100 py-3 my-1">&#9660;
+                        Read
+                        more &#9660;
+                    </button>
                 {% else %}
                     <p class="px-5 text-">{{ film.description|lower|capfirst }}
-                        {{ film.description }}
+                    {{ film.description }}
                 {% endif %}
             </div>
         </div>
@@ -104,43 +105,39 @@
                 <hr class="bg-primary pt-1 m-0">
             </div>
             <div class="w-100 mt-3 px-3 gap-3 d-flex flex-column">
-                <div class="p-3 comment">
-                    <div class="d-flex">
-                        <img class="user-icon" src="./img/user-icon.jpg" alt="">
-                        <p class="text-white ms-2 my-auto">Umar Khashimov :</p>
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="p-3 comment">
+                        <div class="d-flex">
+                            <p class="text-white ms-2 my-auto">{{ comment.user|upper }}
+                                : {{ comment.created_at|timesince }} ago</p>
+                        </div>
+                        <p class="text-white p-3 m-0">{{ comment.comment|slice:'1000' }}</p>
                     </div>
-                    <p class="text-white p-3 m-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-                        nostrum numquam quas quos, doloremque, aut id laboriosam nulla, tenetur corrupti iure at
-                        consectetur placeat odio. Provident iusto nesciunt nisi, tenetur accusamus ipsa? Aperiam
-                        adipisci ipsa suscipit tenetur dolor maxime nesciunt, eligendi magni obcaecati dolorem
-                        laboriosam qui, et deleniti! Beatae, veniam?</p>
-                </div>
-                <div class="p-3 comment">
-                    <div class="d-flex">
-                        <img class="user-icon" src="./img/user-icon.jpg" alt="">
-                        <p class="text-white ms-2 my-auto">Umar Khashimov :</p>
+                {% endfor %}
+            {% else %}
+                <div class="comment">
+                        <div class="d-flex justify-content-center">
+                            <p class="text-white m-0 my-2   ">There's no any comment yet</p>
+                        </div>
+
                     </div>
-                    <p class="text-white p-3 m-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-                        nostrum numquam quas quos, doloremque, aut id laboriosam nulla, tenetur corrupti iure at
-                        consectetur placeat odio. Provident iusto nesciunt nisi, tenetur accusamus ipsa? Aperiam
-                        adipisci ipsa suscipit tenetur dolor maxime nesciunt, eligendi magni obcaecati dolorem
-                        laboriosam qui, et deleniti! Beatae, veniam?</p>
-                </div>
-                <div class="p-3 comment">
-                    <div class="d-flex">
-                        <img class="user-icon" src="./img/user-icon.jpg" alt="">
-                        <p class="text-white ms-2 my-auto">Umar Khashimov :</p>
+
+            {% endif %}
+                {% if request.user.is_authenticated %}
+                    <form action="{% url 'pages:watch' pk=film.id %}" method="post" class="comment d-flex">
+                        {% csrf_token %}
+                        {#                    {{ form }}#}
+                        <input placeholder="Leave a comment" name="comment" maxlength="1000" required="" id="id_comment"
+                               type="text"
+                               class="comment-input w-100 p-2 bg-transparent">
+                        <button type="submit" class="h-100 btn btn-outline-primary p-3">Submit</button>
+                    </form>
+                {% else %}
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'auth_login' %}" class="btn btn-outline-primary">If you want to leave a comment, you need to 'Log in' first !</a>
                     </div>
-                    <p class="text-white p-3 m-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium
-                        tempore pariatur illo unde eaque adipisci ut reprehenderit quis quae, voluptatibus laudantium
-                        laboriosam at accusantium molestiae porro! Odit ex dolores optio, rem blanditiis et quae harum
-                        illo. Nobis provident maiores voluptate quos magnam autem reprehenderit neque numquam. Dicta
-                        odit illum eveniet.</p>
-                </div>
-                <div class="comment d-flex">
-                    <input placeholder="Leave Comment" type="text" class="comment-input w-100 p-2 bg-transparent">
-                    <button type="submit" class="h-100 btn btn-outline-primary p-3">Submit</button>
-                </div>
+                {% endif %}
             </div>
         </div>
         <!-- COMMENTS END -->
