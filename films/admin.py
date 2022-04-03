@@ -20,10 +20,10 @@ class GenreModelAdmin(admin.ModelAdmin):
 
 @admin.register(FilmModel)
 class FilmModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'year', 'age']
+    list_display = ['id', 'name', 'movie_type', 'year', 'age']
     list_display_links = ['id', 'name']
     search_fields = ['name', 'genre', 'tag', 'description']
-    list_filter = ['created_at']
+    list_filter = ['created_at', 'movie_type']
 
 
 @admin.register(BannerModel)

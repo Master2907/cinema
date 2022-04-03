@@ -105,29 +105,27 @@
                 <hr class="bg-primary pt-1 m-0">
             </div>
             <div class="w-100 mt-3 px-3 gap-3 d-flex flex-column">
-            {% if comments %}
-                {% for comment in comments %}
-                    <div class="p-3 comment">
-                        <div class="d-flex">
-                            <p class="text-white ms-2 my-auto">{{ comment.user|upper }}
-                                : {{ comment.created_at|timesince }} ago</p>
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="p-3 comment">
+                            <div class="d-flex">
+                                <p class="text-white ms-2 my-auto">{{ comment.user }}
+                                    : {{ comment.created_at|timesince }} ago</p>
+                            </div>
+                            <p class="text-white p-3 m-0">{{ comment.comment|slice:'1000' }}</p>
                         </div>
-                        <p class="text-white p-3 m-0">{{ comment.comment|slice:'1000' }}</p>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <div class="comment">
+                    {% endfor %}
+                {% else %}
+                    <div class="comment">
                         <div class="d-flex justify-content-center">
                             <p class="text-white m-0 my-2   ">There's no any comment yet</p>
                         </div>
-
                     </div>
 
-            {% endif %}
+                {% endif %}
                 {% if request.user.is_authenticated %}
                     <form action="{% url 'pages:watch' pk=film.id %}" method="post" class="comment d-flex">
                         {% csrf_token %}
-                        {#                    {{ form }}#}
                         <input placeholder="Leave a comment" name="comment" maxlength="1000" required="" id="id_comment"
                                type="text"
                                class="comment-input w-100 p-2 bg-transparent">
@@ -135,7 +133,8 @@
                     </form>
                 {% else %}
                     <div class="d-flex justify-content-center">
-                        <a href="{% url 'auth_login' %}" class="btn btn-outline-primary">If you want to leave a comment, you need to 'Log in' first !</a>
+                        <a href="{% url 'auth_login' %}" class="btn btn-outline-primary">If you want to leave a comment,
+                            you need to 'Log in' first !</a>
                     </div>
                 {% endif %}
             </div>

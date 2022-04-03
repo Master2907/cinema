@@ -68,7 +68,7 @@ class FilmModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
     genre = models.ManyToManyField(GenreModel, verbose_name=_("genre"))
     tag = models.ManyToManyField(TagModel, verbose_name=_("tag"))
-    year = models.ForeignKey(YearModel, on_delete=models.SET_NULL, null=True, verbose_name="year")
+    year = models.ForeignKey(YearModel, on_delete=models.CASCADE, null=True, verbose_name="year")
     movie_type = models.CharField(max_length=20, choices=m_type, default=1, verbose_name=_("movie type"))
     age = models.CharField(max_length=3, choices=f_age, default=3, verbose_name=_('age'))
 

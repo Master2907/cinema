@@ -101,14 +101,16 @@ class SearchPageView(ListView):
 def film_watch(request, pk):
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
     comments = CommentModel.objects.all().filter(film_id=pk)
-    form = CommentForm
-
+    # form = CommentForm
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             user = request.user
             comment = request.POST.get('comment')
-            CommentModel.objects.create(user=user, film=film, comment=comment)
+            if CommentModel.objects.filter(user=user, film=film, comment=comment).exists():
+                pass
+            else:
+                CommentModel.objects.create(user=user, film=film, comment=comment)
     else:
         form = CommentForm()
 
