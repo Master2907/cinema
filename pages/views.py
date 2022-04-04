@@ -53,6 +53,13 @@ class FilmsPageView(ListView):
         if tag:
             qs = qs.filter(tag__id=tag)
 
+        rating = self.request.GET.get('rating')
+        if rating:
+            if rating == '1':
+                qs = qs.order_by('-likes')
+            if rating == '2':
+                qs = qs.order_by('likes')
+
         return qs
 
 
@@ -84,6 +91,13 @@ class CartoonPageView(ListView):
         tag = self.request.GET.get('tag')
         if tag:
             qs = qs.filter(tag__id=tag)
+
+        rating = self.request.GET.get('rating')
+        if rating:
+            if rating == '1':
+                qs = qs.order_by('-likes')
+            if rating == '2':
+                qs = qs.order_by('likes')
 
         return qs
 
