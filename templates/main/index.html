@@ -91,6 +91,45 @@
                 </div>
             </div>
         </div>
+
+        <div class="row mt-3 mx-1">
+            <div class="col-12">
+                <h2 class="text-white m-0 mx-3" href="#">Most rated</h2>
+                <div class="my-slickies my-3">
+                    {% for i in most_rated %}
+                        {% for film in most_rated %}
+                            <div class="slicks position-relative slick-div mx-2">
+                                <div class="slicks-inner-div position-absolute w-100 d-none">
+                                    <div class="position-absolute slicks-inner-content w-100">
+                                        <div>
+                                            <p class="m-0 ms-2 px-1 text-white">{{ film.year }}
+                                                : {{ film.movie_type|lower|capfirst }}</p>
+                                            <p class="m-0 mb-3 px-1 mt-1 ms-2 text-white">
+                                                {% for genre in film.genre.all %}
+                                                    {{ genre|lower|capfirst }},
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                        <div class="px-2 py-1 watch-button position-absolute w-100">
+                                            <a href="{% url 'pages:watch' pk=film.pk %}"
+                                               class="btn btn-primary p-1 w-100"><p
+                                                    class="m-0">
+                                                Watch</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src="{{ film.image.url }}" class="slick-img w-100 h-100" alt="">
+                                <a href="#">
+                                    <p class="ps-1">{% if film.name|length > 40 %}{{ film.name|lower|capfirst|slice:'40' }}...{% else %}{{ film.name|lower|capfirst }}{% endif %}</p>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
         <div class="row mt-3 mx-1">
             <div class="col-12">
                 <h2 class="text-white m-0 mx-3" href="#">Films</h2>

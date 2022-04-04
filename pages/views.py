@@ -1,9 +1,13 @@
 from django.shortcuts import render
+from django.urls import reverse
+
 from films.models import FilmModel, BannerModel, TagModel, GenreModel, YearModel
 from comments.models import CommentModel
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render, redirect, get_object_or_404
 from comments.forms import CommentForm
+from django.http import HttpResponseRedirect
+
 
 class HomePageView(ListView):
     model = FilmModel
@@ -15,6 +19,7 @@ class HomePageView(ListView):
         context['all_films'] = FilmModel.objects.all().order_by('name')
         context['type_film'] = FilmModel.objects.all().filter(movie_type='film')
         context['type_cartoon'] = FilmModel.objects.all().filter(movie_type='cartoon')
+        context['most_rated'] = FilmModel.objects.all().order_by('-likes')
 
         return context
 
@@ -98,9 +103,45 @@ class SearchPageView(ListView):
             return qs
 
 
+def like_view(request, pk):
+    film = get_object_or_404(FilmModel, id=request.POST.get('film_id'))
+    liked = False
+    if film.likes.filter(id=request.user.id).exists():
+        film.likes.remove(request.user)
+        liked = False
+    else:
+        film.likes.add(request.user)
+        film.dislikes.filter(id=request.user.id).exists()
+        film.dislikes.remove(request.user)
+        liked = True
+    return HttpResponseRedirect(reverse('pages:watch', args=[str(pk)]))
+
+
+def dislike_view(request, pk):
+    film = get_object_or_404(FilmModel, id=request.POST.get('film_id'))
+    disliked = False
+    if film.dislikes.filter(id=request.user.id).exists():
+        film.dislikes.remove(request.user)
+        disliked = False
+    else:
+        film.dislikes.add(request.user)
+        if film.likes.filter(id=request.user.id).exists():
+            film.likes.remove(request.user)
+        disliked = True
+    return HttpResponseRedirect(reverse('pages:watch', args=[str(pk)]))
+
+
 def film_watch(request, pk):
+    stuff = get_object_or_404(FilmModel, id=pk)
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
     comments = CommentModel.objects.all().filter(film_id=pk)
+    liked = False
+    if stuff.likes.filter(id=request.user.id).exists():
+        liked = True
+    disliked = False
+    if stuff.dislikes.filter(id=request.user.id).exists():
+        disliked = True
+
     # form = CommentForm
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -115,8 +156,15 @@ def film_watch(request, pk):
         form = CommentForm()
 
     return render(request, 'main/watch.html', context={
+        'total_likes': stuff.total_likes(),
+        'total_dislikes': stuff.total_dislikes(),
         'film': film,
+        'liked': liked,
+        'disliked': disliked,
         'comments': comments,
         'form': form,
         'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all()).exclude(id=pk)),
     })
+
+
+

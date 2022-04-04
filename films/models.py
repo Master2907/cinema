@@ -71,6 +71,14 @@ class FilmModel(models.Model):
     year = models.ForeignKey(YearModel, on_delete=models.CASCADE, null=True, verbose_name="year")
     movie_type = models.CharField(max_length=20, choices=m_type, default=1, verbose_name=_("movie type"))
     age = models.CharField(max_length=3, choices=f_age, default=3, verbose_name=_('age'))
+    likes = models.ManyToManyField(UserModel, related_name='like', verbose_name=_('likes'), blank=True)
+    dislikes = models.ManyToManyField(UserModel, related_name='dislike', verbose_name=_('disliked'), blank=True)
+
+    def total_likes(self):
+        return self.likes.count()
+
+    def total_dislikes(self):
+        return self.dislikes.count()
 
     def __str__(self):
         return self.name
