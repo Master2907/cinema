@@ -29,10 +29,9 @@
                                 <p class="my-1 me-2">Year :</p>
                                 <select name="year" class="form-select selections"
                                         onchange="getParamSearch('year', this.value)">
-                                <option value="">---</option>
+                                    <option value="">---</option>
                                     {% for year in years %}
                                         <option {% if request.GET.year == year.year|stringformat:'i' %}selected{% endif %} value="{{ year.year }}">{{ year.year }}</option>
-
                                     {% endfor %}
                                 </select>
                             </div>

@@ -35,6 +35,16 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
+                        <li>
+                            <ul class="d-flex navbar-nav flex-row gap-2 justify-content-center">
+                                <li><a class="btn text-white p-0" href="#">UZ</a></li>
+                                <li><a class="btn text-white p-0" href="#">RU</a></li>
+                                <li><a class="btn text-white p-0" href="#">EN</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" href="{% url 'auth_logout' %}"><img alt=""
                                                                                          class="nav-icon ms-1 me-2"
                                                                                          src="{% static 'img/logout-icon.png' %}">Logout</a>
@@ -59,7 +69,7 @@
 
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-lg-row flex-column align-items-center">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-lg-row flex-column align-items-center">
                 {% url 'pages:home' as current_path %}
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == current_path %}active{% endif %}"
@@ -76,42 +86,52 @@
                        href="{% url 'pages:cartoon' %}">Cartoons</a>
                 </li>
             </ul>
-                {% if request.user.is_authenticated %}
-                    <div class="nav-item dropdown d-none d-lg-block">
-                        <a class="nav-link text-white btn dropdown-toggle my-2" href="#"
-                           id="navbarDarkDropdownMenuLink" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ request.user.username|title }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item" href="{% url 'auth_password_change' %}"><img alt=""
-                                                                                                      class="nav-icon me-2"
-                                                                                                      src="{% static 'img/change-password-icon.png' %}">Change</a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{% url 'auth_logout' %}"><img alt=""
-                                                                                             class="nav-icon ms-1 me-2"
-                                                                                             src="{% static 'img/logout-icon.png' %}">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                        {% else %}
-                    <li class="nav-item d-none d-lg-block py-2">
-                        <a href="{% url 'auth_login' %}">
-                            <button class="btn btn-outline-success">Log in</button>
-                        </a>
-                    </li>
-                {% endif %}
-                {% url 'pages:search' as searching %}
-                {% if request.path != searching %}
+            {% if request.user.is_authenticated %}
+                <div class="nav-item dropdown d-none d-lg-block">
+                    <a class="nav-link text-white btn dropdown-toggle my-2" href="#"
+                       id="navbarDarkDropdownMenuLink" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ request.user.username|title }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item" href="{% url 'auth_password_change' %}"><img alt=""
+                                                                                                  class="nav-icon me-2"
+                                                                                                  src="{% static 'img/change-password-icon.png' %}">Change</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <ul class="d-flex navbar-nav gap-2 justify-content-center">
+                                <li><a class="btn btn-sm text-white p-0" href="#">UZ</a></li>
+                                <li><a class="btn btn-sm text-white p-0" href="#">RU</a></li>
+                                <li><a class="btn btn-sm text-white p-0" href="#">EN</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'auth_logout' %}"><img alt=""
+                                                                                         class="nav-icon ms-1 me-2"
+                                                                                         src="{% static 'img/logout-icon.png' %}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            {% else %}
+                <li class="nav-item d-none d-lg-block py-2">
+                    <a href="{% url 'auth_login' %}">
+                        <button class="btn btn-outline-success">Log in</button>
+                    </a>
+                </li>
+            {% endif %}
+            {% url 'pages:search' as searching %}
+            {% if request.path != searching %}
                 <form class="d-flex mx-3 py-2 px-5 px-lg-0" action="{% url 'pages:search' %}">
                     <input class="form-control me-2" value="{{ request.GET.q }}" name="q" type="search"
                            placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
-        {% endif %}
+            {% endif %}
         </div>
     </div>
 </nav>

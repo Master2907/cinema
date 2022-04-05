@@ -133,30 +133,17 @@ def like_view(request, pk):
 
 def dislike_view(request, pk):
     film = get_object_or_404(FilmModel, id=request.POST.get('film_id'))
-    disliked = False
     if film.dislikes.filter(id=request.user.id).exists():
         film.dislikes.remove(request.user)
-        disliked = False
     else:
         film.dislikes.add(request.user)
         if film.likes.filter(id=request.user.id).exists():
             film.likes.remove(request.user)
-        disliked = True
     return HttpResponseRedirect(reverse('pages:watch', args=[str(pk)]))
 
 
-def film_watch(request, pk):
-    stuff = get_object_or_404(FilmModel, id=pk)
+def leave_comment(request, pk):
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
-    comments = CommentModel.objects.all().filter(film_id=pk)
-    liked = False
-    if stuff.likes.filter(id=request.user.id).exists():
-        liked = True
-    disliked = False
-    if stuff.dislikes.filter(id=request.user.id).exists():
-        disliked = True
-
-    # form = CommentForm
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -168,17 +155,25 @@ def film_watch(request, pk):
                 CommentModel.objects.create(user=user, film=film, comment=comment)
     else:
         form = CommentForm()
+    return HttpResponseRedirect(reverse('pages:watch', args=[str(pk)]))
+
+
+def film_watch(request, pk):
+    film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
+    comments = CommentModel.objects.all().filter(film_id=pk)
+    liked = False
+    if film.likes.filter(id=request.user.id).exists():
+        liked = True
+    disliked = False
+    if film.dislikes.filter(id=request.user.id).exists():
+        disliked = True
 
     return render(request, 'main/watch.html', context={
-        'total_likes': stuff.total_likes(),
-        'total_dislikes': stuff.total_dislikes(),
+        'total_likes': film.total_likes(),
+        'total_dislikes': film.total_dislikes(),
         'film': film,
         'liked': liked,
         'disliked': disliked,
         'comments': comments,
-        'form': form,
         'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all()).exclude(id=pk)),
     })
-
-
-

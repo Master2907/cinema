@@ -143,7 +143,7 @@
 
                 {% endif %}
                 {% if request.user.is_authenticated %}
-                    <form action="{% url 'pages:watch' pk=film.id %}" method="post" class="comment d-flex">
+                    <form action="{% url 'pages:leave_comment' pk=film.id %}" method="post" class="comment d-flex">
                         {% csrf_token %}
                         <input placeholder="Leave a comment" name="comment" maxlength="1000" required="" id="id_comment"
                                type="text"
