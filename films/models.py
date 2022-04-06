@@ -86,6 +86,7 @@ class FilmModel(models.Model):
     class Meta:
         verbose_name = _('film')
         verbose_name_plural = _('films')
+        ordering = ['-created_at']
 
 
 class BannerModel(models.Model):

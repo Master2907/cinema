@@ -16,10 +16,10 @@ class HomePageView(ListView):
     def get_context_data(self, *args, object_list=None, **kwargs):
         context = super(HomePageView, self, *args, **kwargs).get_context_data()
         context['banners'] = BannerModel.objects.all().order_by('-id')[:4]
-        context['all_films'] = FilmModel.objects.all().order_by('name')
+        context['all_films'] = FilmModel.objects.all()
         context['type_film'] = FilmModel.objects.all().filter(movie_type='film')
         context['type_cartoon'] = FilmModel.objects.all().filter(movie_type='cartoon')
-        context['most_rated'] = FilmModel.objects.all().order_by('-likes')
+        context['most_rated'] = FilmModel.objects.all()
 
         return context
 
@@ -29,6 +29,7 @@ class FilmsPageView(ListView):
     template_name = 'main/films.html'
     paginate_by = 12
     context_object_name = 'films'
+
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(FilmsPageView, self, **kwargs).get_context_data()
@@ -160,7 +161,7 @@ def leave_comment(request, pk):
 
 def film_watch(request, pk):
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
-    comments = CommentModel.objects.all().filter(film_id=pk)
+    comments = CommentModel.objects.all().filter(film_id=pk).order_by('created_at')
     liked = False
     if film.likes.filter(id=request.user.id).exists():
         liked = True

@@ -35,6 +35,7 @@ class BannerModelAdmin(admin.ModelAdmin):
 
 
 @admin.register(YearModel)
-class BannerModelAdmin(admin.ModelAdmin):
+class YearModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'year']
 
+    ordering = ['-year']

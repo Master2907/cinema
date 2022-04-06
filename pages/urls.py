@@ -11,5 +11,5 @@ urlpatterns = [
     path('<int:pk>/watch/', film_watch, name='watch'),
     path('<int:pk>/like', like_view, name='like_film'),
     path('<int:pk>/dislike', dislike_view, name='dislike_film'),
-    path('<int:pk>', leave_comment, name='leave_comment')
+    path('<int:pk>/comment', leave_comment, name='leave_comment')
 ]
