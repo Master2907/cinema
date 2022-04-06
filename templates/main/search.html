@@ -34,7 +34,7 @@
                                 </div>
                             </div>
                             <img src="{{ film.image.url }}" class="mb-1 h-100 w-100 img-fluid" alt="">
-                            <a href="#" class=" film-name">
+                            <a href="{% url 'pages:watch' pk=film.id %}" class=" film-name">
                                 <p class="ps-1">{% if film.name|length > 35 %}{{ film.name|lower|capfirst|slice:'35' }}...{% else %}{{ film.name|lower|capfirst }}{% endif %}</p>
                             </a>
                         </div>

@@ -10,7 +10,7 @@
                     <div class="w-100 ">
                         <div class="d-flex justify-content-end justify-content-lg-around me-4 me-lg-0">
                             <div class="d-flex">
-                                <p class="my-1 me-2">Genre :</p>
+                                <p class="my-1 me-2">Genre:</p>
                                 <select name="genre" class="form-select selections"
                                         onchange="getParamSearch('genre', this.value)">
                                         <option value="">---</option>
@@ -26,7 +26,7 @@
                     <div class="w-100 ">
                         <div class="d-flex justify-content-center justify-content-lg-around">
                             <div class=" d-flex">
-                                <p class="my-1 me-2">Year :</p>
+                                <p class="my-1 me-2">Year:</p>
                                 <select name="year" class="form-select selections"
                                         onchange="getParamSearch('year', this.value)">
                                     <option value="">---</option>
@@ -42,7 +42,7 @@
                     <div class="w-100 ">
                         <div class="d-flex justify-content-end justify-content-lg-around mt-3 mt-lg-0 me-4 me-lg-0">
                             <div class="d-flex">
-                                <p class="my-1 me-2">Tag :</p>
+                                <p class="my-1 me-2">Tag:</p>
                                 <select name="tag" class="form-select selections"
                                         onchange="getParamSearch('tag', this.value)">
                                 <option value="">---</option>
@@ -58,7 +58,7 @@
                     <div class="w-100">
                         <div class="d-flex justify-content-center justify-content-lg-around me-3 pe-1 pe-lg-0 me-lg-0 mt-3 mt-lg-0">
                             <div class="d-flex">
-                                <p class="my-1 me-2">Rating :</p>
+                                <p class="my-1 me-2">Rating:</p>
                                 <select name="rating" onchange="getParamSearch('rating', this.value)" class="form-select selections" aria-label="Default select example">
                                     <option value="">---</option>
                                     <option {% if request.GET.rating == '1' %}selected{% endif %} value="1">High to low</option>
@@ -80,7 +80,7 @@
                     <div class="film-cards position-relative my-4">
                         <div class="film-card-in-div d-none position-absolute w-100 h-100">
                             <div class="film-d-in-div w-100 position-absolute">
-                                <p class="m-0 mx-2 mb-1">{{ film.year }} : {{ film.age }}</p>
+                                <p class="m-0 mx-2 mb-1">{{ film.year }}: {{ film.age }}</p>
                                 <p class="m-0 mx-2">{% for genre in film.genre.all %}
                                     {{ genre|lower|capfirst }},
                                 {% endfor %}</p>
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <img src="{{ film.image.url }}" class="mb-1 h-100 w-100 img-fluid" alt="">
-                        <a href="#" class=" film-name">
+                        <a href="{% url 'pages:watch' pk=film.pk %}" class=" film-name">
                             <p class="ps-1">{% if film.name|length > 35 %}{{ film.name|lower|capfirst|slice:'35' }}...{% else %}{{ film.name|lower|capfirst }}{% endif %}</p>
                         </a>
                     </div>
