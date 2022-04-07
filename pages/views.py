@@ -118,30 +118,6 @@ class SearchPageView(ListView):
             return qs
 
 
-def like_view(request, pk):
-    film = get_object_or_404(FilmModel, id=request.POST.get('film_id'))
-    liked = False
-    if film.likes.filter(id=request.user.id).exists():
-        film.likes.remove(request.user)
-        liked = False
-    else:
-        film.likes.add(request.user)
-        film.dislikes.filter(id=request.user.id).exists()
-        film.dislikes.remove(request.user)
-        liked = True
-    return HttpResponseRedirect(reverse('pages:watch', args=[str(pk)]))
-
-
-def dislike_view(request, pk):
-    film = get_object_or_404(FilmModel, id=request.POST.get('film_id'))
-    if film.dislikes.filter(id=request.user.id).exists():
-        film.dislikes.remove(request.user)
-    else:
-        film.dislikes.add(request.user)
-        if film.likes.filter(id=request.user.id).exists():
-            film.likes.remove(request.user)
-    return HttpResponseRedirect(reverse('pages:watch', args=[str(pk)]))
-
 
 def leave_comment(request, pk):
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
@@ -162,19 +138,9 @@ def leave_comment(request, pk):
 def film_watch(request, pk):
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
     comments = CommentModel.objects.all().filter(film_id=pk).order_by('created_at')
-    liked = False
-    if film.likes.filter(id=request.user.id).exists():
-        liked = True
-    disliked = False
-    if film.dislikes.filter(id=request.user.id).exists():
-        disliked = True
 
     return render(request, 'main/watch.html', context={
-        'total_likes': film.total_likes(),
-        'total_dislikes': film.total_dislikes(),
         'film': film,
-        'liked': liked,
-        'disliked': disliked,
         'comments': comments,
         'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all()).exclude(id=pk)),
     })

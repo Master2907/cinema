@@ -1,4 +1,5 @@
 $('.my-slickies').slick({
+    autoplay: false,
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 1,
