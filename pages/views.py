@@ -20,6 +20,7 @@ class HomePageView(ListView):
         context['all_films'] = FilmModel.objects.all()
         context['type_film'] = FilmModel.objects.all().filter(movie_type='film')
         context['type_cartoon'] = FilmModel.objects.all().filter(movie_type='cartoon')
+        context['most_rated'] = FilmModel.objects.all()
 
         return context
 
@@ -143,7 +144,7 @@ def film_watch(request, pk):
         'comments': comments,
         'liked': RatingModel.objects.filter(user=request.user, film=film, is_liked=True),
         'disliked': RatingModel.objects.filter(user=request.user, film=film, is_liked=False),
-        'total_dislikes': RatingModel.objects.all().filter(is_liked=False).count(),
-        'total_likes': RatingModel.objects.all().filter(is_liked=True).count(),
+        'total_dislikes': RatingModel.objects.all().filter(is_liked=False, film=film).count(),
+        'total_likes': RatingModel.objects.all().filter(is_liked=True, film=film).count(),
         'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all()).exclude(id=pk)),
     })

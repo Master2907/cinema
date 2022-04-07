@@ -158,13 +158,6 @@
                 {% endif %}
             </div>
         </div>
-    <form action="{% url 'rating:rate_view' pk=film.id %}" method="post">
-        {% csrf_token %}
-        <button name="is_liked" class="w-100 btn btn-primary mt-4 p-2 pl-lg-0 form-inputs" type="submit"
-                value="True">Like</button>
-        <button name="is_liked" class="w-100 btn btn-primary mt-4 p-2 pl-lg-0 form-inputs" type="submit"
-                value="False">Dislike</button>
-    </form>
         <!-- COMMENTS END -->
     </div>
     <!-- BODY END -->
