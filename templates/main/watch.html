@@ -46,42 +46,42 @@
                 <video controls class="w-100 video p-0 m-0">
                     <source src="{{ film.film_video.url }}" type="video/mp4">
                 </video>
-{#                <div class="d-flex mt-2 justify-content-center rating gap-3 py-3">#}
-{#                    <div class="d-flex my-auto">#}
-{#                        <p class="text-white m-0"><span class="text-primary">{{ total_likes }}</span> : LIKES</p>#}
-{#                    </div>#}
-{#                {% if request.user.is_authenticated %}#}
-{#                    <form method="POST"  action="{% url 'pages:like_film' pk=film.id %}">#}
-{#                    {% csrf_token %}#}
-{#                        <button type="submit" name="film_id" value="{{ film.id }}" class="btn p-0">#}
-{#                            {% if liked %}#}
-{#                                <img src="{% static 'img/liked-icon.png' %}" class="img-fluid" alt="">#}
-{#                            {% else %}#}
-{#                                <img src="{% static 'img/like.png' %}" class="img-fluid" alt="">#}
-{#                            {% endif %}#}
-{#                        </button>#}
-{#                    </form>#}
-{#                    <a href="#comments">#}
-{#                        <img src="{% static 'img/leave-comment.png' %}" alt="">#}
-{#                    </a>#}
-{##}
-{#                    <form method="POST"  action="{% url 'pages:dislike_film' pk=film.id %}">#}
-{#                    {% csrf_token %}#}
-{#                        <button type="submit" name="film_id" value="{{ film.id }}" class="btn p-0">#}
-{#                            {% if disliked %}#}
-{#                                <img src="{% static 'img/disliked-icon.png' %}" alt="">#}
-{#                            {% else %}#}
-{#                                <img src="{% static 'img/dislike.png' %}" alt="">#}
-{#                            {% endif %}#}
-{#                        </button>#}
-{#                    </form>#}
-{#                    {% else %}#}
-{#                    <a class="btn btn-outline-primary" href="{% url 'auth_login' %}">Log in to rate</a>#}
-{#                {% endif %}#}
-{#                    <div class="d-flex my-auto">#}
-{#                        <p class=" m-0 text-white">DISLIKES : <span class="text-primary">{{ total_dislikes }}</span></p>#}
-{#                    </div>#}
-{#                </div>#}
+                <div class="d-flex mt-2 justify-content-center rating gap-3 py-3">
+                    <div class="d-flex my-auto">
+                        <p class="text-white m-0"><span class="text-primary">{{ total_likes }}</span> : LIKES</p>
+                    </div>
+                {% if request.user.is_authenticated %}
+                    <form method="POST"  action="{% url 'rating:rate_view' pk=film.id %}">
+                    {% csrf_token %}
+                        <button value="True" type="submit" name="is_liked" value="{{ film.id }}" class="btn p-0">
+                            {% if liked %}
+                                <img src="{% static 'img/liked-icon.png' %}" class="img-fluid" alt="">
+                            {% else %}
+                                <img src="{% static 'img/like.png' %}" class="img-fluid" alt="">
+                            {% endif %}
+                        </button>
+                    </form>
+                    <a href="#comments">
+                        <img src="{% static 'img/leave-comment.png' %}" alt="">
+                    </a>
+
+                    <form method="POST"  action="{% url 'rating:rate_view' pk=film.id %}">
+                    {% csrf_token %}
+                        <button value="False" type="submit" name="is_liked" value="{{ film.id }}" class="btn p-0">
+                            {% if disliked %}
+                                <img src="{% static 'img/disliked-icon.png' %}" alt="">
+                            {% else %}
+                                <img src="{% static 'img/dislike.png' %}" alt="">
+                            {% endif %}
+                        </button>
+                    </form>
+                    {% else %}
+                    <a class="btn btn-outline-primary" href="{% url 'auth_login' %}">Log in to rate</a>
+                {% endif %}
+                    <div class="d-flex my-auto">
+                        <p class=" m-0 text-white">DISLIKES : <span class="text-primary">{{ total_dislikes }}</span></p>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- VIDEO END -->
@@ -158,6 +158,13 @@
                 {% endif %}
             </div>
         </div>
+    <form action="{% url 'rating:rate_view' pk=film.id %}" method="post">
+        {% csrf_token %}
+        <button name="is_liked" class="w-100 btn btn-primary mt-4 p-2 pl-lg-0 form-inputs" type="submit"
+                value="True">Like</button>
+        <button name="is_liked" class="w-100 btn btn-primary mt-4 p-2 pl-lg-0 form-inputs" type="submit"
+                value="False">Dislike</button>
+    </form>
         <!-- COMMENTS END -->
     </div>
     <!-- BODY END -->

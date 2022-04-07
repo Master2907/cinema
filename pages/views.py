@@ -7,6 +7,7 @@ from django.views.generic import DetailView, ListView
 from django.shortcuts import render, redirect, get_object_or_404
 from comments.forms import CommentForm
 from django.http import HttpResponseRedirect
+from rating.models import RatingModel
 
 
 class HomePageView(ListView):
@@ -19,7 +20,6 @@ class HomePageView(ListView):
         context['all_films'] = FilmModel.objects.all()
         context['type_film'] = FilmModel.objects.all().filter(movie_type='film')
         context['type_cartoon'] = FilmModel.objects.all().filter(movie_type='cartoon')
-        context['most_rated'] = FilmModel.objects.all()
 
         return context
 
@@ -118,7 +118,6 @@ class SearchPageView(ListView):
             return qs
 
 
-
 def leave_comment(request, pk):
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
     if request.method == 'POST':
@@ -142,5 +141,9 @@ def film_watch(request, pk):
     return render(request, 'main/watch.html', context={
         'film': film,
         'comments': comments,
+        'liked': RatingModel.objects.filter(user=request.user, film=film, is_liked=True),
+        'disliked': RatingModel.objects.filter(user=request.user, film=film, is_liked=False),
+        'total_dislikes': RatingModel.objects.all().filter(is_liked=False).count(),
+        'total_likes': RatingModel.objects.all().filter(is_liked=True).count(),
         'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all()).exclude(id=pk)),
     })
