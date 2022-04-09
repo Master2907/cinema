@@ -10,6 +10,9 @@ class RatingModel(models.Model):
     film = models.ForeignKey(FilmModel, on_delete=models.CASCADE, verbose_name='film')
     is_liked = models.BooleanField(verbose_name='is liked')
 
+    def likes_count(self):
+        return self.is_liked.count()
+
     def __str__(self):
         return f"{self.user}"
 

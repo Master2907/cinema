@@ -17,10 +17,10 @@ class HomePageView(ListView):
     def get_context_data(self, *args, object_list=None, **kwargs):
         context = super(HomePageView, self, *args, **kwargs).get_context_data()
         context['banners'] = BannerModel.objects.all().order_by('-id')[:4]
-        context['all_films'] = FilmModel.objects.all()
-        context['type_film'] = FilmModel.objects.all().filter(movie_type='film')
-        context['type_cartoon'] = FilmModel.objects.all().filter(movie_type='cartoon')
-        context['most_rated'] = FilmModel.objects.all()
+        context['all_films'] = FilmModel.objects.all().order_by('-created_at')
+        context['type_film'] = FilmModel.objects.all().filter(movie_type='film').order_by('-created_at')
+        context['type_cartoon'] = FilmModel.objects.all().filter(movie_type='cartoon').order_by('-created_at')
+        # context['most_rated'] = RatingModel.objects.all().order_by('-film__ratingmodel__is_liked')
 
         return context
 
@@ -138,12 +138,19 @@ def leave_comment(request, pk):
 def film_watch(request, pk):
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
     comments = CommentModel.objects.all().filter(film_id=pk).order_by('created_at')
+    liked = False
+    disliked = False
+    if request.user.is_authenticated:
+        if RatingModel.objects.filter(user=request.user, film=film, is_liked=True):
+            liked = True
+        elif RatingModel.objects.filter(user=request.user, film=film, is_liked=False):
+            disliked = True
 
     return render(request, 'main/watch.html', context={
         'film': film,
         'comments': comments,
-        'liked': RatingModel.objects.filter(user=request.user, film=film, is_liked=True),
-        'disliked': RatingModel.objects.filter(user=request.user, film=film, is_liked=False),
+        'liked': liked,
+        'disliked': disliked,
         'total_dislikes': RatingModel.objects.all().filter(is_liked=False, film=film).count(),
         'total_likes': RatingModel.objects.all().filter(is_liked=True, film=film).count(),
         'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all()).exclude(id=pk)),

@@ -97,16 +97,16 @@
                             <div class="slicks-inner-div position-absolute w-100 d-none">
                                 <div class="position-absolute slicks-inner-content w-100">
                                     <div class="">
-                                        <p class="m-0 ms-2 px-1 text-white">{{ film.year }}
+                                        <p class="m-0 ms-2 px-1 text-white">{{ film.film.year }}
                                             : {{ film.movie_type|lower|capfirst }}</p>
                                         <p class="m-0 mb-3 px-1 mt-1 ms-2 text-white">
-                                            {% for genre in film.genre.all %}
+                                            {% for genre in film.film.genre.all %}
                                                 {{ genre|lower|capfirst }},
                                             {% endfor %}
                                         </p>
                                     </div>
                                     <div class="px-2 py-1 watch-button position-absolute w-100">
-                                        <a href="{% url 'pages:watch' pk=film.pk %}"
+                                        <a href="{% url 'pages:watch' pk=film.film.pk %}"
                                            class="btn btn-primary p-1 w-100"><p
                                                 class="m-0">
                                             Watch</p>
@@ -116,7 +116,7 @@
                             </div>
                             <img src="{{ film.image.url }}" class="slick-img w-100 h-100" alt="">
                             <a href="#">
-                                <p class="text-white film-name mt-1 ms-1">{{ film.name|lower|capfirst }}</p>
+                                <p class="text-white film-name mt-1 ms-1">{{ film.film.name|lower|capfirst }}</p>
                             </a>
                         </div>
                     {% endfor %}
