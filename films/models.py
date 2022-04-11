@@ -20,12 +20,6 @@ f_age = (
 )
 
 
-f_year = ()
-for i in range(1900, datetime.now().year + 1):
-    f_y_tuple = (f"{i}", f"{i}")
-    f_year += (f_y_tuple,)
-
-
 class YearModel(models.Model):
     year = models.PositiveIntegerField(unique=True, default=int(datetime.now().year), verbose_name=_('year'))
 
@@ -35,6 +29,7 @@ class YearModel(models.Model):
     class Meta:
         verbose_name = 'year'
         verbose_name_plural = 'years'
+
 
 class GenreModel(models.Model):
     name = models.CharField(max_length=25, verbose_name=_("name"))
@@ -70,7 +65,7 @@ class FilmModel(models.Model):
     tag = models.ManyToManyField(TagModel, verbose_name=_("tag"))
     year = models.ForeignKey(YearModel, on_delete=models.CASCADE, null=True, verbose_name="year")
     movie_type = models.CharField(max_length=20, choices=m_type, default=1, verbose_name=_("movie type"))
-    age = models.CharField(max_length=3, choices=f_age, default=3, verbose_name=_('age'))
+    age = models.CharField(max_length=3, choices=f_age, verbose_name=_('age'))
 
     def __str__(self):
         return self.name

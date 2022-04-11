@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -20,8 +21,7 @@ class HomePageView(ListView):
         context['all_films'] = FilmModel.objects.all().order_by('-created_at')
         context['type_film'] = FilmModel.objects.all().filter(movie_type='film').order_by('-created_at')
         context['type_cartoon'] = FilmModel.objects.all().filter(movie_type='cartoon').order_by('-created_at')
-        # context['most_rated'] = RatingModel.objects.all().order_by('-film__ratingmodel__is_liked')
-
+        context['most_rated'] = RatingModel.objects.filter(is_liked=True)
         return context
 
 
@@ -58,9 +58,9 @@ class FilmsPageView(ListView):
         rating = self.request.GET.get('rating')
         if rating:
             if rating == '1':
-                qs = qs.order_by('-likes')
+                qs = qs.order_by('-ratingmodel__is_liked')
             if rating == '2':
-                qs = qs.order_by('likes')
+                qs = qs.order_by('ratingmodel__is_liked')
 
         return qs
 
@@ -97,9 +97,9 @@ class CartoonPageView(ListView):
         rating = self.request.GET.get('rating')
         if rating:
             if rating == '1':
-                qs = qs.order_by('-likes')
+                qs = qs.order_by('-ratingmodel__is_liked')
             if rating == '2':
-                qs = qs.order_by('likes')
+                qs = qs.order_by('ratingmodel__is_liked')
 
         return qs
 
