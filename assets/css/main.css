@@ -350,6 +350,10 @@ option {
     padding-bottom: 100px !important;
 }
 
+.dropdown-active {
+    color: lightskyblue;
+}
+
 @media (max-width: 991px) {
     .brand-name {
         font-size: 40px !important;

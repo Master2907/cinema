@@ -28,7 +28,7 @@ class HomePageView(ListView):
 class FilmsPageView(ListView):
     model = FilmModel
     template_name = 'main/films.html'
-    paginate_by = 12
+    paginate_by = 24
     context_object_name = 'films'
 
 
@@ -68,7 +68,7 @@ class FilmsPageView(ListView):
 class CartoonPageView(ListView):
     model = FilmModel
     template_name = 'main/cartoons.html'
-    paginate_by = 12
+    paginate_by = 24
     context_object_name = 'films'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -155,3 +155,14 @@ def film_watch(request, pk):
         'total_likes': RatingModel.objects.all().filter(is_liked=True, film=film).count(),
         'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all()).exclude(id=pk)),
     })
+
+
+class LikedFilmsView(ListView):
+    model = RatingModel
+    template_name = 'main/liked-films.html'
+    paginate_by = 24
+
+    def get_queryset(self):
+        qs = RatingModel.objects.all().filter(user=self.request.user, is_liked=True)
+
+        return qs
