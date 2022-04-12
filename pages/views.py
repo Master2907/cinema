@@ -163,6 +163,6 @@ class LikedFilmsView(ListView):
     paginate_by = 24
 
     def get_queryset(self):
-        qs = RatingModel.objects.all().filter(user=self.request.user, is_liked=True)
+        qs = RatingModel.objects.all().filter(user=self.request.user, is_liked=True).order_by('-created_at')
 
         return qs

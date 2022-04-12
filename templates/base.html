@@ -96,7 +96,7 @@
                         </a>
                         <ul class="dropdown-menu mt-2 dropdown-menu-dark">
                             {% url 'pages:liked-films' as current_path %}
-                            <li><a class="{% if request.path == current_path %}dropdown-active{% endif %} dropdown-item" href="{% url 'pages:liked-films' %}"><img alt=""
+                            <li><a class="{% if request.path == current_path %} dropdown-active {% endif %} dropdown-item" href="{% url 'pages:liked-films' %}"><img alt=""
                                                                                                       class="nav-icon me-2"
                                                                                                       src="{% static 'img/like-dark.png' %}">Liked films
                             </a>

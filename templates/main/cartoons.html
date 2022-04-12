@@ -80,7 +80,7 @@
                     <div class="film-cards position-relative my-4">
                         <div class="film-card-in-div d-none position-absolute w-100 h-100">
                             <div class="film-d-in-div w-100 position-absolute">
-                                <p class="m-0 mx-2 mb-1">{{ film.year }}: {{ film.age }}</p>
+                                <p class="m-0 mx-2 mb-1">{{ film.year }} : {{ film.age }}</p>
                                 <p class="m-0 mx-2">{% for genre in film.genre.all %}
                                     {{ genre|lower|capfirst }},
                                 {% endfor %}</p>

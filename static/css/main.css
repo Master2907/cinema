@@ -351,7 +351,7 @@ option {
 }
 
 .dropdown-active {
-    color: lightskyblue;
+    color: lightskyblue !important;
 }
 
 @media (max-width: 991px) {
