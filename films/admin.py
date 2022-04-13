@@ -37,5 +37,13 @@ class BannerModelAdmin(admin.ModelAdmin):
 @admin.register(YearModel)
 class YearModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'year']
-
     ordering = ['-year']
+
+
+@admin.register(SavedFilmsModel)
+class SavedFilmsModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'film', 'user']
+    list_display_links = ['id', 'film']
+    search_fields = ['film', 'user']
+    list_filter = ['created_at']
+    

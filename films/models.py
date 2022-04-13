@@ -87,3 +87,16 @@ class BannerModel(models.Model):
     class Meta:
         verbose_name = "banner"
         verbose_name_plural = "banners"
+
+
+class SavedFilmsModel(models.Model):
+    film = models.ForeignKey(FilmModel, on_delete=models.CASCADE, verbose_name=_('film'))
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE, verbose_name=_('user'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created at'))
+
+    def __str__(self):
+        return f'{self.film}'
+
+    class Meta:
+        verbose_name = 'saved film'
+        verbose_name_plural = 'saved films'

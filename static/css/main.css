@@ -125,11 +125,11 @@ a {
     height: 40px;
 }
 
-.slicks-inner-div a img{
-    left: 80%;
+.save-button{
+    left: 78%;
     top: 10px;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
 }
 
 .slicks-inner-div {
@@ -187,7 +187,7 @@ a {
 }
 
 .film-card-img {
-    left: 80%;
+    left: 79%;
     width: 35px;
     height: 35px;
 }
@@ -379,13 +379,20 @@ option {
         font-size: 30px !important;
     }
 
-    .slicks-inner-content p {
-        font-size: 21px;
+    .slicks-inner-content div p {
+        font-size: 20px;
     }
 
-    .slicks-inner-div a img {
-        width: 35px;
-        height: 35px;
+    .slicks-inner-content {
+        top: 20%;
+    }
+
+    .slicks-inner-content>.watch-button {
+        top: 60%;
+    }
+
+    .save-button {
+        left: 77%;
     }
 
     .filter-div p {

@@ -2,11 +2,12 @@ from django.db.models import Count
 from django.shortcuts import render
 from django.urls import reverse
 
-from films.models import FilmModel, BannerModel, TagModel, GenreModel, YearModel
+from films.models import FilmModel, BannerModel, TagModel, GenreModel, YearModel, SavedFilmsModel
 from comments.models import CommentModel
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render, redirect, get_object_or_404
 from comments.forms import CommentForm
+from films.forms import SaveForm
 from django.http import HttpResponseRedirect
 from rating.models import RatingModel
 
@@ -14,6 +15,7 @@ from rating.models import RatingModel
 class HomePageView(ListView):
     model = FilmModel
     template_name = 'main/index.html'
+    saved = False
 
     def get_context_data(self, *args, object_list=None, **kwargs):
         context = super(HomePageView, self, *args, **kwargs).get_context_data()
@@ -136,14 +138,15 @@ def leave_comment(request, pk):
 
 
 def film_watch(request, pk):
+    films = FilmModel.objects.all()
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
     comments = CommentModel.objects.all().filter(film_id=pk).order_by('created_at')
     liked = False
     disliked = False
     if request.user.is_authenticated:
-        if RatingModel.objects.filter(user=request.user, film=film, is_liked=True):
+        if RatingModel.objects.filter(user=request.user, film=film, is_liked=True).exists():
             liked = True
-        elif RatingModel.objects.filter(user=request.user, film=film, is_liked=False):
+        elif RatingModel.objects.filter(user=request.user, film=film, is_liked=False).exists():
             disliked = True
 
     return render(request, 'main/watch.html', context={
@@ -165,4 +168,26 @@ class LikedFilmsView(ListView):
     def get_queryset(self):
         qs = RatingModel.objects.all().filter(user=self.request.user, is_liked=True).order_by('-created_at')
 
+        return qs
+
+
+def save_view(request, pk):
+    film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
+    if request.method == 'POST':
+        form = SaveForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            if SavedFilmsModel.objects.filter(user=user, film=film).exists():
+                SavedFilmsModel.objects.filter(user=user, film=film).delete()
+            else:
+                SavedFilmsModel.objects.create(user=user, film=film)
+    return redirect(request.GET.get('next', '/'))
+
+
+class SavedView(ListView):
+    model = FilmModel
+    template_name = 'main/saved-films.html'
+
+    def get_queryset(self):
+        qs = SavedFilmsModel.objects.all().filter(user=self.request.user).order_by('-created_at')
         return qs

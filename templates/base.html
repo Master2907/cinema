@@ -29,10 +29,21 @@
                             {{ request.user.username|title }}
                         </a>
                         <ul class="dropdown-menu mt-2 dropdown-menu-dark">
+                            {% url 'pages:saved-films' as current_path %}
+                            <li>
+                                <a class="{% if request.path == current_path %} dropdown-active {% endif %} dropdown-item"
+                                   href="{% url 'pages:saved-films' %}"><img alt=""
+                                                                             class="nav-icon me-2"
+                                                                             src="{% static 'img/bookmark-icon.png' %}">Saved
+                                    films
+                                </a>
+                            </li>
                             {% url 'pages:liked-films' as current_path %}
-                            <li><a class="{% if request.path == current_path %}dropdown-active{% endif %} dropdown-item" href="{% url 'pages:liked-films' %}"><img alt=""
-                                                                                                      class="nav-icon me-2"
-                                                                                                      src="{% static 'img/like-dark.png' %}">Liked films
+                            <li><a class="{% if request.path == current_path %}dropdown-active{% endif %} dropdown-item"
+                                   href="{% url 'pages:liked-films' %}"><img alt=""
+                                                                             class="nav-icon me-2"
+                                                                             src="{% static 'img/like-dark.png' %}">Liked
+                                films
                             </a>
                             </li>
                             <li>
@@ -45,7 +56,8 @@
                             </li>
                             <li><a class="dropdown-item" href="{% url 'auth_logout' %}"><img alt=""
                                                                                              class="nav-icon me-2"
-                                                                                             src="{% static 'img/logout-icon.png' %}">Log out
+                                                                                             src="{% static 'img/logout-icon.png' %}">Log
+                                out
                             </a>
                             </li>
                         </ul>
@@ -95,11 +107,23 @@
                             {{ request.user.username|title }}
                         </a>
                         <ul class="dropdown-menu mt-2 dropdown-menu-dark">
+                            {% url 'pages:saved-films' as current_path %}
+                            <li>
+                                <a class="{% if request.path == current_path %} dropdown-active {% endif %} dropdown-item"
+                                   href="{% url 'pages:saved-films' %}"><img alt=""
+                                                                             class="nav-icon me-2"
+                                                                             src="{% static 'img/bookmark-icon.png' %}">Saved
+                                    films
+                                </a>
+                            </li>
                             {% url 'pages:liked-films' as current_path %}
-                            <li><a class="{% if request.path == current_path %} dropdown-active {% endif %} dropdown-item" href="{% url 'pages:liked-films' %}"><img alt=""
-                                                                                                      class="nav-icon me-2"
-                                                                                                      src="{% static 'img/like-dark.png' %}">Liked films
-                            </a>
+                            <li>
+                                <a class="{% if request.path == current_path %} dropdown-active {% endif %} dropdown-item"
+                                   href="{% url 'pages:liked-films' %}"><img alt=""
+                                                                             class="nav-icon me-2"
+                                                                             src="{% static 'img/like-dark.png' %}">Liked
+                                    films
+                                </a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -111,7 +135,8 @@
                             </li>
                             <li><a class="dropdown-item" href="{% url 'auth_logout' %}"><img alt=""
                                                                                              class="nav-icon me-2"
-                                                                                             src="{% static 'img/logout-icon.png' %}">Log out
+                                                                                             src="{% static 'img/logout-icon.png' %}">Log
+                                out
                             </a>
                             </li>
                         </ul>

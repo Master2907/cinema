@@ -59,6 +59,15 @@
                     {% for film in all_films %}
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
+                                {% if request.user.is_authenticated %}
+                                    <form method="post" action="{% url 'pages:save-film' pk=film.id %}">
+                                        {% csrf_token %}
+                                        <button href="" class="border-0 p-0 pe-lg-2 pe-xxl-0 position-absolute save-button bg-transparent">
+                                                <img class=" img-fluid"
+                                                     src="{% static 'img/bookmark-icon-light.png' %}" alt="">
+                                        </button>
+                                    </form>
+                                {% endif %}
                                 <div class="position-absolute slicks-inner-content w-100">
                                     <div>
                                         <p class="m-0 ms-2 px-1 text-white">{{ film.year }}

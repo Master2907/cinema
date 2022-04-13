@@ -13,9 +13,10 @@
                                 <p class="my-1 me-2">Genre :</p>
                                 <select name="genre" class="form-select selections"
                                         onchange="getParamSearch('genre', this.value)">
-                                        <option value="">---</option>
+                                    <option value="">---</option>
                                     {% for genre in genres %}
-                                        <option {% if request.GET.genre == genre.id|stringformat:'i' %}selected{% endif %} value="{{ genre.id }}">{{ genre.name }}</option>
+                                        <option {% if request.GET.genre == genre.id|stringformat:'i' %}selected{% endif %}
+                                                value="{{ genre.id }}">{{ genre.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -31,7 +32,8 @@
                                         onchange="getParamSearch('year', this.value)">
                                     <option value="">---</option>
                                     {% for year in years %}
-                                        <option {% if request.GET.year == year.year|stringformat:'i' %}selected{% endif %} value="{{ year.year }}">{{ year.year }}</option>
+                                        <option {% if request.GET.year == year.year|stringformat:'i' %}selected{% endif %}
+                                                value="{{ year.year }}">{{ year.year }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -45,9 +47,10 @@
                                 <p class="my-1 me-2">Tag :</p>
                                 <select name="tag" class="form-select selections"
                                         onchange="getParamSearch('tag', this.value)">
-                                <option value="">---</option>
+                                    <option value="">---</option>
                                     {% for tag in tags %}
-                                        <option {% if request.GET.tag == tag.id|stringformat:'i' %}selected{% endif %} value="{{ tag.id }}">{{ tag.name }}</option>
+                                        <option {% if request.GET.tag == tag.id|stringformat:'i' %}selected{% endif %}
+                                                value="{{ tag.id }}">{{ tag.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -59,10 +62,15 @@
                         <div class="d-flex justify-content-center justify-content-lg-around me-3 pe-1 pe-lg-0 me-lg-0 mt-3 mt-lg-0">
                             <div class="d-flex flex-row flex-lg-column flex-xl-row">
                                 <p class="my-1 me-2">Rating :</p>
-                                <select name="rating" onchange="getParamSearch('rating', this.value)" class="form-select selections" aria-label="Default select example">
+                                <select name="rating" onchange="getParamSearch('rating', this.value)"
+                                        class="form-select selections" aria-label="Default select example">
                                     <option value="">---</option>
-                                    <option {% if request.GET.rating == '1' %}selected{% endif %} value="1">High to low</option>
-                                    <option {% if request.GET.rating == '2' %}selected{% endif %} value="2">Low to High</option>
+                                    <option {% if request.GET.rating == '1' %}selected{% endif %} value="1">High to
+                                        low
+                                    </option>
+                                    <option {% if request.GET.rating == '2' %}selected{% endif %} value="2">Low to
+                                        High
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -74,30 +82,38 @@
 
         <!-- FILM CARDS START -->
         <div class="row mx-5">
-        {% if object_list %}
-            {% for film in object_list %}
-                <div class="col-4 col-lg-3 col-xl-2 mt-5">
-                    <div class="film-cards position-relative my-4">
-                        <div class="film-card-in-div d-none position-absolute w-100 h-100">
-                            <div class="film-d-in-div w-100 position-absolute">
-                                <p class="m-0 mx-2 mb-1">{{ film.year }} : {{ film.age }}</p>
-                                <p class="m-0 mx-2">{% for genre in film.genre.all %}
-                                    {{ genre|lower|capfirst }},
-                                {% endfor %}</p>
+            {% if object_list %}
+                {% for film in object_list %}
+                    <div class="col-4 col-lg-3 col-xl-2 mt-5">
+                        <div class="film-cards position-relative my-4">
+                            <div class="film-card-in-div d-none position-absolute w-100 h-100">
+                            <form method="post" action="{% url 'pages:save-film' pk=film.id %}">
+                                {% csrf_token %}
+                                <button class="border-0 film-card-img p-0 pt-3 position-absolute bg-transparent" href="#"><img src="{% static 'img/bookmark-icon-light.png' %}"
+                                                 class="img-fluid"
+                                                 alt=""></button>
+                            </form>
+                                <div class="film-d-in-div w-100 position-absolute">
+                                    <p class="m-0 mx-2 mb-1">{{ film.year }} : {{ film.age }}</p>
+                                    <p class="m-0 mx-2">{% for genre in film.genre.all %}
+                                        {{ genre|lower|capfirst }},
+                                    {% endfor %}</p>
+                                </div>
+                                <div class="px-2 py-1 position-absolute watch-card-button w-100">
+                                    <a href="{% url 'pages:watch' pk=film.id %}" class="btn btn-primary p-1 w-100">
+                                        <p class="m-0">Watch</p>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="px-2 py-1 position-absolute watch-card-button w-100">
-                                <a href="{% url 'pages:watch' pk=film.id %}" class="btn btn-primary p-1 w-100">
-                                    <p class="m-0">Watch</p>
-                                </a>
-                            </div>
+                            <img src="{{ film.image.url }}" class="mb-1 h-100 w-100 img-fluid" alt="">
+                            <a href="{% url 'pages:watch' pk=film.pk %}" class=" film-name">
+                                <p class="ps-1">
+                                    {% if film.name|length > 35 %}{{ film.name|lower|capfirst|slice:'35' }}...{% else %}
+                                        {{ film.name|lower|capfirst }}{% endif %}</p>
+                            </a>
                         </div>
-                        <img src="{{ film.image.url }}" class="mb-1 h-100 w-100 img-fluid" alt="">
-                        <a href="{% url 'pages:watch' pk=film.pk %}" class=" film-name">
-                            <p class="ps-1">{% if film.name|length > 35 %}{{ film.name|lower|capfirst|slice:'35' }}...{% else %}{{ film.name|lower|capfirst }}{% endif %}</p>
-                        </a>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
             {% else %}
                 <div class="col-12 d-flex justify-content-center">
                     <h3 class="text-white py-3 my-5">Sorry, there is no film with this parameters.</h3>
@@ -105,43 +121,43 @@
             {% endif %}
         </div>
 
-            <!-- FILM CARDS END -->
-            {% if page_obj.paginator.count >= 25 %}
-                <div class="row mt-5 pt-5">
-                    <div class="col-12 d-flex justify-content-center">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination ">
-                                {% if page_obj.has_previous %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
-                                           aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
+        <!-- FILM CARDS END -->
+        {% if page_obj.paginator.count >= 25 %}
+            <div class="row mt-5 pt-5">
+                <div class="col-12 d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination ">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% for page in paginator.page_range %}
+                                {% if page_obj.number == page %}
+                                    <li class="page-item ms-1"><a class="page-link active"
+                                                                  href="?page={{ page }}">{{ page }}</a></li>
+                                {% elif page > page_obj.number|add:-6 and page < page_obj.number|add:6 %}
+                                    <li class="page-item ms-1"><a class="page-link"
+                                                                  href="?page={{ page }}">{{ page }}</a></li>
                                 {% endif %}
-                                {% for page in paginator.page_range %}
-                                    {% if page_obj.number == page %}
-                                        <li class="page-item ms-1"><a class="page-link active"
-                                                                      href="?page={{ page }}">{{ page }}</a></li>
-                                    {% elif page > page_obj.number|add:-6 and page < page_obj.number|add:6 %}
-                                        <li class="page-item ms-1"><a class="page-link"
-                                                                      href="?page={{ page }}">{{ page }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                                {% if page_obj.has_next %}
-                                    <li class="page-item ms-1">
-                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}"
-                                           aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            </ul>
-                        </nav>
-                    </div>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li class="page-item ms-1">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
+    </div>
     <!-- BODY END -->
     {{ years.year }}
 {% endblock %}
