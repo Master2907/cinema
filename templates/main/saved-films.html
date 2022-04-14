@@ -16,6 +16,15 @@
                 <div class="col-4 col-lg-3 col-xl-2 mt-5">
                     <div class="film-cards position-relative my-4">
                         <div class="film-card-in-div d-none position-absolute w-100 h-100">
+                        {% if request.user.is_authenticated %}
+                               <form method="post" action="{% url 'films:save-film' pk=film.film.id %}?next={{ request.path }}">
+                                        {% csrf_token %}
+                                        <button class="border-0 film-card-img p-0 pt-3 position-absolute bg-transparent"
+                                                href="#"><img src="{% static 'img/bookmark-icon-light.png' %}"
+                                                              class="img-fluid"
+                                                              alt=""></button>
+                                    </form>
+                            {% endif %}
                             <div class="film-d-in-div w-100 position-absolute">
                                 <p class="m-0 mx-2 mb-1">{{ film.film.year }} : {{ film.film.movie_type }}</p>
                                 <p class="m-0 mx-2">{% for genre in film.film.genre.all %}
@@ -37,7 +46,7 @@
             {% endfor %}
             {% else %}
                 <div class="col-12 d-flex justify-content-center">
-                    <h3 class="text-white py-5 my-5">You didn't like any film yet.</h3>
+                    <h3 class="text-white py-5 my-5">You didn't save any film yet.</h3>
                 </div>
             {% endif %}
         </div>

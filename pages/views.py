@@ -121,22 +121,6 @@ class SearchPageView(ListView):
             return qs
 
 
-def leave_comment(request, pk):
-    film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            user = request.user
-            comment = request.POST.get('comment')
-            if CommentModel.objects.filter(user=user, film=film, comment=comment).exists():
-                pass
-            else:
-                CommentModel.objects.create(user=user, film=film, comment=comment)
-    else:
-        form = CommentForm()
-    return HttpResponseRedirect(reverse('pages:watch', args=[str(pk)]))
-
-
 def film_watch(request, pk):
     films = FilmModel.objects.all()
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
@@ -169,19 +153,6 @@ class LikedFilmsView(ListView):
         qs = RatingModel.objects.all().filter(user=self.request.user, is_liked=True).order_by('-created_at')
 
         return qs
-
-
-def save_view(request, pk):
-    film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
-    if request.method == 'POST':
-        form = SaveForm(request.POST)
-        if form.is_valid():
-            user = request.user
-            if SavedFilmsModel.objects.filter(user=user, film=film).exists():
-                SavedFilmsModel.objects.filter(user=user, film=film).delete()
-            else:
-                SavedFilmsModel.objects.create(user=user, film=film)
-    return redirect(request.GET.get('next', '/'))
 
 
 class SavedView(ListView):

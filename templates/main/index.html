@@ -60,12 +60,12 @@
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
                                 {% if request.user.is_authenticated %}
-                                    <form method="post" action="{% url 'pages:save-film' pk=film.id %}">
+                                    <form method="post" action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
                                         {% csrf_token %}
-                                        <button href="" class="border-0 p-0 pe-lg-2 pe-xxl-0 position-absolute save-button bg-transparent">
-                                                <img class=" img-fluid"
-                                                     src="{% static 'img/bookmark-icon-light.png' %}" alt="">
-                                        </button>
+                                        <button class="border-0 save-button p-0 pt-1 position-absolute bg-transparent"
+                                                href="#"><img src="{% static 'img/bookmark-icon-light.png' %}"
+                                                              class="img-fluid"
+                                                              alt=""></button>
                                     </form>
                                 {% endif %}
                                 <div class="position-absolute slicks-inner-content w-100">
@@ -104,6 +104,15 @@
                     {% for film in type_film %}
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
+                            {% if request.user.is_authenticated %}
+                                    <form method="post" action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
+                                        {% csrf_token %}
+                                        <button class="border-0 save-button p-0 pt-1 position-absolute bg-transparent"
+                                                href="#"><img src="{% static 'img/bookmark-icon-light.png' %}"
+                                                              class="img-fluid"
+                                                              alt=""></button>
+                                    </form>
+                                {% endif %}
                                 <div class="position-absolute slicks-inner-content w-100">
                                     <div class="">
                                         <p class="m-0 ms-2 px-1 text-white">{{ film.year }}
@@ -140,6 +149,15 @@
                     {% for film in type_film %}
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
+                                {% if request.user.is_authenticated %}
+                                    <form method="post" action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
+                                        {% csrf_token %}
+                                        <button class="border-0 save-button p-0 pt-1 position-absolute bg-transparent"
+                                                href="#"><img src="{% static 'img/bookmark-icon-light.png' %}"
+                                                              class="img-fluid"
+                                                              alt=""></button>
+                                    </form>
+                                {% endif %}
                                 <div class="position-absolute slicks-inner-content w-100">
                                     <div>
                                         <p class="m-0 ms-2 px-1 text-white">{{ film.year }}
@@ -176,6 +194,15 @@
                     {% for film in type_cartoon %}
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
+                                {% if request.user.is_authenticated %}
+                                    <form method="post" action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
+                                        {% csrf_token %}
+                                        <button class="border-0 save-button p-0 pt-1 position-absolute bg-transparent"
+                                                href="#"><img src="{% static 'img/bookmark-icon-light.png' %}"
+                                                              class="img-fluid"
+                                                              alt=""></button>
+                                    </form>
+                                {% endif %}
                                 <div class="position-absolute slicks-inner-content w-100">
                                     <div>
                                         <p class="m-0 ms-2 px-1 text-white">{{ film.year }}

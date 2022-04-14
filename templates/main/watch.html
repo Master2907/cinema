@@ -50,34 +50,34 @@
                     <div class="d-flex my-auto">
                         <p class="text-white m-0"><span class="text-primary">{{ total_likes }}</span> : LIKES</p>
                     </div>
-                {% if request.user.is_authenticated %}
-                    <form method="POST"  action="{% url 'rating:rate_view' pk=film.id %}">
-                    {% csrf_token %}
-                        <button value="True" type="submit" name="is_liked" value="{{ film.id }}" class="btn p-0">
-                            {% if liked %}
-                                <img src="{% static 'img/liked-icon.png' %}" class="img-fluid" alt="">
-                            {% else %}
-                                <img src="{% static 'img/like.png' %}" class="img-fluid" alt="">
-                            {% endif %}
-                        </button>
-                    </form>
-                    <a href="#comments">
-                        <img src="{% static 'img/leave-comment.png' %}" alt="">
-                    </a>
+                    {% if request.user.is_authenticated %}
+                        <form method="POST" action="{% url 'rating:rate_view' pk=film.id %}">
+                            {% csrf_token %}
+                            <button value="True" type="submit" name="is_liked" value="{{ film.id }}" class="btn p-0">
+                                {% if liked %}
+                                    <img src="{% static 'img/liked-icon.png' %}" class="img-fluid" alt="">
+                                {% else %}
+                                    <img src="{% static 'img/like.png' %}" class="img-fluid" alt="">
+                                {% endif %}
+                            </button>
+                        </form>
+                        <a href="#comments">
+                            <img src="{% static 'img/leave-comment.png' %}" alt="">
+                        </a>
 
-                    <form method="POST"  action="{% url 'rating:rate_view' pk=film.id %}">
-                    {% csrf_token %}
-                        <button value="False" type="submit" name="is_liked" value="{{ film.id }}" class="btn p-0">
-                            {% if disliked %}
-                                <img src="{% static 'img/disliked-icon.png' %}" alt="">
-                            {% else %}
-                                <img src="{% static 'img/dislike.png' %}" alt="">
-                            {% endif %}
-                        </button>
-                    </form>
+                        <form method="POST" action="{% url 'rating:rate_view' pk=film.id %}">
+                            {% csrf_token %}
+                            <button value="False" type="submit" name="is_liked" value="{{ film.id }}" class="btn p-0">
+                                {% if disliked %}
+                                    <img src="{% static 'img/disliked-icon.png' %}" alt="">
+                                {% else %}
+                                    <img src="{% static 'img/dislike.png' %}" alt="">
+                                {% endif %}
+                            </button>
+                        </form>
                     {% else %}
-                    <a class="btn btn-outline-primary" href="{% url 'auth_login' %}">Log in to rate</a>
-                {% endif %}
+                        <a class="btn btn-outline-primary" href="{% url 'auth_login' %}">Log in to rate</a>
+                    {% endif %}
                     <div class="d-flex my-auto">
                         <p class=" m-0 text-white">DISLIKES : <span class="text-primary">{{ total_dislikes }}</span></p>
                     </div>
@@ -91,25 +91,35 @@
             <div class="col-12">
                 <a class="c-names m-3" href="#">Similar Films</a>
                 <div class="my-slickies my-3">
-                    {% for films in related %}
+                    {% for related in related %}
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
+                                {% if request.user.is_authenticated %}
+                                    <form method="post" action="{% url 'films:save-film' pk=related.id %}?next={{ request.path }}">
+                                        {% csrf_token %}
+                                        <button href=""
+                                                class="border-0 p-0 pe-lg-2 pe-xxl-0 position-absolute save-button bg-transparent">
+                                            <img class=" img-fluid"
+                                                 src="{% static 'img/bookmark-icon-light.png' %}" alt="">
+                                        </button>
+                                    </form>
+                                {% endif %}
                                 <div class="position-absolute slicks-inner-content w-100">
                                     <div>
-                                        <p class="m-0 ms-2 text-white">{{ films.year }} :</p>
+                                        <p class="m-0 ms-2 text-white">{{ related.year }} :</p>
                                         <p class="m-0 mb-3 ms-1 text-white">
-                                            {% for genre in films.genre.all %}{{ genre }}, {% endfor %}</p>
+                                            {% for genre in related.genre.all %}{{ genre }}, {% endfor %}</p>
                                     </div>
                                     <div class="px-2 py-1 watch-button position-absolute w-100">
-                                        <a href="{% url 'pages:watch' pk=films.id %}" class="btn btn-primary p-1 w-100">
+                                        <a href="{% url 'pages:watch' pk=related.id %}" class="btn btn-primary p-1 w-100">
                                             <p class="m-0">Watch</p>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                            <img src="{{ films.image.url }}" class="slick-img w-100 h-100" alt="">
+                            <img src="{{ related.image.url }}" class="slick-img w-100 h-100" alt="">
                             <a href="#">
-                                <p class="text-white film-name mt-1 ms-1">{{ films.name|lower|capfirst }}</p>
+                                <p class="text-white film-name mt-1 ms-1">{{ related.name|lower|capfirst }}</p>
                             </a>
                         </div>
                     {% endfor %}
@@ -143,7 +153,8 @@
 
                 {% endif %}
                 {% if request.user.is_authenticated %}
-                    <form id="comments" action="{% url 'comment:leave_comment' pk=film.id %}" method="post" class="comment d-flex">
+                    <form id="comments" action="{% url 'comment:leave_comment' pk=film.id %}" method="post"
+                          class="comment d-flex">
                         {% csrf_token %}
                         <input placeholder="Leave a comment" name="comment" maxlength="1000" required="" id="id_comment"
                                type="text"
