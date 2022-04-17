@@ -54,11 +54,16 @@
                                                                                                       src="{% static 'img/change-password-icon.png' %}">Change
                             </a>
                             </li>
-                            <li><a class="dropdown-item" href="{% url 'auth_logout' %}"><img alt=""
-                                                                                             class="nav-icon me-2"
-                                                                                             src="{% static 'img/logout-icon.png' %}">Log
-                                out
-                            </a>
+                            {% url 'pages:saved-films' as u1 %}
+                            {% url 'pages:liked-films' as u2 %}
+                            <li><a class="dropdown-item"
+                                   href="{% url 'auth_logout' %}
+                                    {% if request.path == u1 %}?next={% url 'pages:home' %}
+                                    {% elif request.path == u2 %}?next={% url 'pages:home' %}
+                                    {% else %}?next={{ request.path }}
+                                    {% endif %}">
+                                <img alt="" class="nav-icon me-2" src="{% static 'img/logout-icon.png' %}">Log out</a>
+                            </li>
                             </li>
                         </ul>
                     </div>
@@ -66,7 +71,7 @@
             {% else %}
 
                 <li class="nav-item d-block d-lg-none py-1 me-3">
-                    <a href="{% url 'auth_login' %}">
+                    <a href="{% url 'auth_login' %}?next={{ request.path }}">
                         <button class="btn btn-outline-success">Log in</button>
                     </a>
                 </li>
@@ -133,18 +138,20 @@
                                                                                                       src="{% static 'img/change-password-icon.png' %}">Change
                             </a>
                             </li>
-                            <li><a class="dropdown-item" href="{% url 'auth_logout' %}"><img alt=""
-                                                                                             class="nav-icon me-2"
-                                                                                             src="{% static 'img/logout-icon.png' %}">Log
-                                out
-                            </a>
+                            {% url 'pages:saved-films' as u1 %}
+                            {% url 'pages:liked-films' as u2 %}
+                            <li><a class="dropdown-item"
+                                   href="{% url 'auth_logout' %}{% if request.path == u1%}?next={% url 'pages:home' %}
+                                    {% elif request.path == u2 %}?next={% url 'pages:home' %}
+                                    {% else %}?next={{ request.path }}{% endif %}">
+                                <img alt="" class="nav-icon me-2" src="{% static 'img/logout-icon.png' %}">Log out</a>
                             </li>
                         </ul>
                     </div>
                 </li>
             {% else %}
                 <li class="nav-item d-none d-lg-block py-2">
-                    <a href="{% url 'auth_login' %}">
+                    <a href="{% url 'auth_login' %}?next={{ request.path }}">
                         <button class="btn btn-outline-success">Log in</button>
                     </a>
                 </li>

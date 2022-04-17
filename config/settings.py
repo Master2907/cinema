@@ -151,8 +151,8 @@ except ImportError:
 ACCOUNT_ACTIVATION_DAYS = 7
 
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = ('next', '/')
+LOGOUT_REDIRECT_URL = ('next', '/')
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

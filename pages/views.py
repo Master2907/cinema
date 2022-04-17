@@ -156,8 +156,9 @@ class LikedFilmsView(ListView):
 
 
 class SavedView(ListView):
-    model = FilmModel
+    model = SavedFilmsModel
     template_name = 'main/saved-films.html'
+    paginate_by = 24
 
     def get_queryset(self):
         qs = SavedFilmsModel.objects.all().filter(user=self.request.user).order_by('-created_at')

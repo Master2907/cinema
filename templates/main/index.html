@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load my_tags %}
 {% block content %}
 
     <div class="container-fluid container-lg px-5 px-lg-0 pb-5 mt-4 mx-auto">
@@ -7,16 +8,7 @@
         <div class="row pb-5">
             <div class="col-12">
                 <div id="carouselExampleFade" class="carousel slide carousel-fade mt-3" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                                class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                                aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                                aria-label="Slide 3"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
-                                aria-label="Slide 4"></button>
-                    </div>
+
                     <div class="carousel-inner">
                         {% for banner in banners %}
                             {% if banner == banners|first %}
@@ -36,11 +28,13 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
-                            data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
+                    <div class="">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                    </div>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
                             data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -60,12 +54,17 @@
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
                                 {% if request.user.is_authenticated %}
-                                    <form method="post" action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
+                                    <form method="post"
+                                          action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
                                         {% csrf_token %}
                                         <button class="border-0 save-button p-0 pt-1 position-absolute bg-transparent"
-                                                href="#"><img src="{% static 'img/bookmark-icon-light.png' %}"
-                                                              class="img-fluid"
-                                                              alt=""></button>
+                                                href="#">
+                                            {% if film|is_saved:request.user %}
+                                                <img src="{% static 'img/saved-bookmark.png' %}" class="img-fluid" alt="">
+                                                {% else %}
+                                                <img src="{% static 'img/bookmark-icon-light.png' %}" class="img-fluid" alt="">
+                                            {% endif %}
+                                        </button>
                                     </form>
                                 {% endif %}
                                 <div class="position-absolute slicks-inner-content w-100">
@@ -104,13 +103,18 @@
                     {% for film in type_film %}
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
-                            {% if request.user.is_authenticated %}
-                                    <form method="post" action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
+                                {% if request.user.is_authenticated %}
+                                    <form method="post"
+                                          action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
                                         {% csrf_token %}
                                         <button class="border-0 save-button p-0 pt-1 position-absolute bg-transparent"
-                                                href="#"><img src="{% static 'img/bookmark-icon-light.png' %}"
-                                                              class="img-fluid"
-                                                              alt=""></button>
+                                                href="#">
+                                            {% if film|is_saved:request.user %}
+                                                <img src="{% static 'img/saved-bookmark.png' %}" class="img-fluid" alt="">
+                                                {% else %}
+                                                <img src="{% static 'img/bookmark-icon-light.png' %}" class="img-fluid" alt="">
+                                            {% endif %}
+                                        </button>
                                     </form>
                                 {% endif %}
                                 <div class="position-absolute slicks-inner-content w-100">
@@ -150,12 +154,17 @@
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
                                 {% if request.user.is_authenticated %}
-                                    <form method="post" action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
+                                    <form method="post"
+                                          action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
                                         {% csrf_token %}
                                         <button class="border-0 save-button p-0 pt-1 position-absolute bg-transparent"
-                                                href="#"><img src="{% static 'img/bookmark-icon-light.png' %}"
-                                                              class="img-fluid"
-                                                              alt=""></button>
+                                                href="#">
+                                            {% if film|is_saved:request.user %}
+                                                <img src="{% static 'img/saved-bookmark.png' %}" class="img-fluid" alt="">
+                                                {% else %}
+                                                <img src="{% static 'img/bookmark-icon-light.png' %}" class="img-fluid" alt="">
+                                            {% endif %}
+                                        </button>
                                     </form>
                                 {% endif %}
                                 <div class="position-absolute slicks-inner-content w-100">
@@ -195,12 +204,17 @@
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
                                 {% if request.user.is_authenticated %}
-                                    <form method="post" action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
+                                    <form method="post"
+                                          action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
                                         {% csrf_token %}
                                         <button class="border-0 save-button p-0 pt-1 position-absolute bg-transparent"
-                                                href="#"><img src="{% static 'img/bookmark-icon-light.png' %}"
-                                                              class="img-fluid"
-                                                              alt=""></button>
+                                                href="#">
+                                            {% if film|is_saved:request.user %}
+                                                <img src="{% static 'img/saved-bookmark.png' %}" class="img-fluid" alt="">
+                                                {% else %}
+                                                <img src="{% static 'img/bookmark-icon-light.png' %}" class="img-fluid" alt="">
+                                            {% endif %}
+                                        </button>
                                     </form>
                                 {% endif %}
                                 <div class="position-absolute slicks-inner-content w-100">

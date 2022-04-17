@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load my_tags %}
 {% block content %}
     <!-- BODY START -->
     <div class="container-fluid container-lg px-5 px-lg-0 my-5 pb-5 ">
@@ -64,7 +65,6 @@
                         <a href="#comments">
                             <img src="{% static 'img/leave-comment.png' %}" alt="">
                         </a>
-
                         <form method="POST" action="{% url 'rating:rate_view' pk=film.id %}">
                             {% csrf_token %}
                             <button value="False" type="submit" name="is_liked" value="{{ film.id }}" class="btn p-0">
@@ -76,7 +76,7 @@
                             </button>
                         </form>
                     {% else %}
-                        <a class="btn btn-outline-primary" href="{% url 'auth_login' %}">Log in to rate</a>
+                        <a class="btn btn-outline-primary" href="{% url 'auth_login' %}?next={{ request.path }}">Log in to rate</a>
                     {% endif %}
                     <div class="d-flex my-auto">
                         <p class=" m-0 text-white">DISLIKES : <span class="text-primary">{{ total_dislikes }}</span></p>
@@ -86,10 +86,10 @@
         </div>
         <!-- VIDEO END -->
 
-        <!-- SIMILAR FILMS START -->
+        <!-- RELATED FILMS START -->
         <div class="row mt-5 mx-1">
             <div class="col-12">
-                <a class="c-names m-3" href="#">Similar Films</a>
+                <a class="c-names m-3" href="#">Related Films</a>
                 <div class="my-slickies my-3">
                     {% for related in related %}
                         <div class="slicks position-relative slick-div mx-2">
@@ -99,8 +99,11 @@
                                         {% csrf_token %}
                                         <button href=""
                                                 class="border-0 p-0 pe-lg-2 pe-xxl-0 position-absolute save-button bg-transparent">
-                                            <img class=" img-fluid"
-                                                 src="{% static 'img/bookmark-icon-light.png' %}" alt="">
+                                            {% if film|is_saved:request.user %}
+                                                <img src="{% static 'img/saved-bookmark.png' %}" class="img-fluid" alt="">
+                                                {% else %}
+                                                <img src="{% static 'img/bookmark-icon-light.png' %}" class="img-fluid" alt="">
+                                            {% endif %}
                                         </button>
                                     </form>
                                 {% endif %}
@@ -126,7 +129,7 @@
                 </div>
             </div>
         </div>
-        <!-- SIMILAR FILMS END -->
+        <!-- RELATED FILMS END -->
         <!-- COMMENTS START -->
         <div class="col-12 comments p-3">
             <p class="text-white d-flex justify-content-center description">Comments</p>
@@ -163,7 +166,7 @@
                     </form>
                 {% else %}
                     <div class="d-flex justify-content-center">
-                        <a href="{% url 'auth_login' %}" class="btn btn-outline-primary">Log in to leave a comment</a>
+                        <a href="{% url 'auth_login' %}?next={{ request.path }}" class="btn btn-outline-primary">Log in to leave a comment</a>
                     </div>
                 {% endif %}
             </div>
