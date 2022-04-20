@@ -62,9 +62,16 @@
                                 {% endif %}
                             </button>
                         </form>
-                        <a href="#comments">
-                            <img src="{% static 'img/leave-comment.png' %}" alt="">
-                        </a>
+                        <form method="POST" action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
+                            {% csrf_token %}
+                            <button type="submit" name="is_liked" class="btn p-0">
+                                {% if film|is_saved:request.user %}
+                                <img src="{% static 'img/bookmark-watch-icon-light.png' %}" alt="">
+                                {% else %}
+                                <img src="{% static 'img/bookmark-icon-light.png' %}" alt="">
+                                {% endif %}
+                            </button>
+                        </form>
                         <form method="POST" action="{% url 'rating:rate_view' pk=film.id %}">
                             {% csrf_token %}
                             <button value="False" type="submit" name="is_liked" value="{{ film.id }}" class="btn p-0">
@@ -99,7 +106,7 @@
                                         {% csrf_token %}
                                         <button href=""
                                                 class="border-0 p-0 pe-lg-2 pe-xxl-0 position-absolute save-button bg-transparent">
-                                            {% if film|is_saved:request.user %}
+                                            {% if related|is_saved:request.user %}
                                                 <img src="{% static 'img/saved-bookmark.png' %}" class="img-fluid" alt="">
                                                 {% else %}
                                                 <img src="{% static 'img/bookmark-icon-light.png' %}" class="img-fluid" alt="">

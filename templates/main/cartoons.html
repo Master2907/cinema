@@ -3,9 +3,9 @@
 {% load my_tags %}
 {% block content %}
     <!-- BODY START  -->
-    <div class="container-fluid px-5 pb-5 mt-5">
+    <div class="container-fluid container-lg pb-5 mt-5">
         <!-- FILTER START -->
-        <div class="row my-3 filter-div mx-5 py-4 px-5">
+        <div class="row my-3 filter-div mx-3 mx-lg-0 py-4 px-5">
             <div class="row px-2">
                 <div class="col-6 col-lg-3 px-0">
                     <div class="w-100 ">
@@ -82,22 +82,24 @@
         <!-- FILTER END -->
 
         <!-- FILM CARDS START -->
-        <div class="row mx-5">
+        <div class="row mx-2">
             {% if object_list %}
                 {% for film in object_list %}
                     <div class="col-4 col-lg-3 col-xl-2 mt-5">
                         <div class="film-cards position-relative my-4">
                             <div class="film-card-in-div d-none position-absolute w-100 h-100">
                                 {% if request.user.is_authenticated %}
-                                    <form method="post" action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
+                                    <form method="post"
+                                          action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
                                         {% csrf_token %}
                                         <button class="border-0 film-card-img p-0 pt-3 position-absolute bg-transparent"
                                                 href="#">
-                                            {% if film|is_saved:request.user %}
-                                                <img src="{% static 'img/saved-bookmark.png' %}" class="img-fluid" alt="">
-                                                {% else %}
-                                                <img src="{% static 'img/bookmark-icon-light.png' %}" class="img-fluid" alt="">
-                                            {% endif %}
+                                        {% if film|is_saved:request.user %}
+                                            <img src="{% static 'img/saved-bookmark.png' %}" class="img-fluid" alt="">
+                                        {% else %}
+                                            <img src="{% static 'img/bookmark-icon-light.png' %}" class="img-fluid"
+                                                 alt="">
+                                        {% endif %}
                                         </button>
                                     </form>
                                 {% endif %}
