@@ -106,11 +106,11 @@
             {% if request.user.is_authenticated %}
                 <li class="nav-item dropdown d-none d-lg-block">
                     <div class="dropstart">
-                        <a class="nav-link text-white btn dropdown-toggle my-2" href="#"
+                        <button class="nav-link text-white btn dropdown-toggle my-2"
                            id="navbarDarkDropdownMenuLink" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             {{ request.user.username|title }}
-                        </a>
+                        </button>
                         <ul class="dropdown-menu mt-2 dropdown-menu-dark">
                             {% url 'pages:saved-films' as current_path %}
                             <li>

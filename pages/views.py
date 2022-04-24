@@ -122,9 +122,11 @@ class SearchPageView(ListView):
 
 
 def film_watch(request, pk):
-    films = FilmModel.objects.all()
     film = get_object_or_404(FilmModel.objects.all().filter(id=pk))
     comments = CommentModel.objects.all().filter(film_id=pk).order_by('created_at')
+    # likes = RatingModel.objects.get(film=film, is_liked=True)
+    if RatingModel.objects.filter(film=film, is_liked=True).exists():
+        likes = RatingModel.objects.get(film=film, is_liked=True)
     liked = False
     disliked = False
     if request.user.is_authenticated:
@@ -139,7 +141,7 @@ def film_watch(request, pk):
         'liked': liked,
         'disliked': disliked,
         'total_dislikes': RatingModel.objects.all().filter(is_liked=False, film=film).count(),
-        'total_likes': RatingModel.objects.all().filter(is_liked=True, film=film).count(),
+        'total_likes': RatingModel.objects.filter(film=film, is_liked=True).user.count(),
         'related': set(FilmModel.objects.all().filter(tag__id__in=film.tag.all(), genre__id__in=film.genre.all()).exclude(id=pk)),
     })
 
