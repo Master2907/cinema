@@ -43,7 +43,7 @@
                         <a href="{% url 'pages:home' %}" class="btn btn-primary  w-100">
                             <p class="m-0 form-inputs">Go home page</p>
                         </a>
-                        <a href="{% url 'auth_login' %}" class="btn btn-primary  w-100">
+                        <a href="{% url 'auth_login' %}?next={% url 'pages:home' %}" class="btn btn-primary  w-100">
                             <p class="m-0 form-inputs">Already have an account ?</p>
                         </a>
                     </div>
