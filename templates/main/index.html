@@ -100,16 +100,16 @@
             <div class="col-12">
                 <h2 class="text-white m-0 mx-3" href="#">Most rated</h2>
                 <div class="my-slickies my-3">
-                    {% for film in type_film %}
+                    {% for film in most_rated %}
                         <div class="slicks position-relative slick-div mx-2">
                             <div class="slicks-inner-div position-absolute w-100 d-none">
                                 {% if request.user.is_authenticated %}
                                     <form method="post"
-                                          action="{% url 'films:save-film' pk=film.id %}?next={{ request.path }}">
+                                          action="{% url 'films:save-film' pk=film.film.id %}?next={{ request.path }}">
                                         {% csrf_token %}
                                         <button class="border-0 save-button p-0 pt-1 position-absolute bg-transparent"
                                                 href="#">
-                                            {% if film|is_saved:request.user %}
+                                            {% if film.film|is_saved:request.user %}
                                                 <img src="{% static 'img/saved-bookmark.png' %}" class="img-fluid" alt="">
                                                 {% else %}
                                                 <img src="{% static 'img/bookmark-icon-light.png' %}" class="img-fluid" alt="">
@@ -119,16 +119,16 @@
                                 {% endif %}
                                 <div class="position-absolute slicks-inner-content w-100">
                                     <div class="">
-                                        <p class="m-0 ms-2 px-1 text-white">{{ film.year }}
-                                            : {{ film.movie_type|lower|capfirst }}</p>
+                                        <p class="m-0 ms-2 px-1 text-white">{{ film.film.year }}
+                                            : {{ film.film.movie_type|lower|capfirst }}</p>
                                         <p class="m-0 mb-3 px-1 mt-1 ms-2 text-white">
-                                            {% for genre in film.genre.all %}
+                                            {% for genre in film.film.genre.all %}
                                                 {{ genre|lower|capfirst }},
                                             {% endfor %}
                                         </p>
                                     </div>
                                     <div class="px-2 py-1 watch-button position-absolute w-100">
-                                        <a href="{% url 'pages:watch' pk=film.pk %}"
+                                        <a href="{% url 'pages:watch' pk=film.film.id %}"
                                            class="btn btn-primary p-1 w-100"><p
                                                 class="m-0">
                                             Watch</p>
@@ -136,9 +136,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <img src="{{ film.image.url }}" class="slick-img w-100 h-100" alt="">
+                            <img src="{{ film.film.image.url }}" class="slick-img w-100 h-100" alt="">
                             <a href="#">
-                                <p class="text-white film-name mt-1 ms-1">{{ film.name|lower|capfirst }}</p>
+                                <p class="text-white film-name mt-1 ms-1">{{ film.film.name|lower|capfirst }}</p>
                             </a>
                         </div>
                     {% endfor %}

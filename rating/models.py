@@ -6,8 +6,8 @@ UserModel = get_user_model()
 
 
 class RatingModel(models.Model):
-    user = models.ManyToManyField(UserModel, verbose_name='user')
     film = models.ForeignKey(FilmModel, on_delete=models.CASCADE, verbose_name='film')
+    user = models.ManyToManyField(UserModel, verbose_name='user')
     is_liked = models.BooleanField(verbose_name='is liked')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
 
