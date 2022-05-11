@@ -74,7 +74,6 @@ class FilmModel(models.Model):
         verbose_name = _('film')
         verbose_name_plural = _('films')
 
-
 class BannerModel(models.Model):
     name = models.CharField(max_length=50, verbose_name=_('name'))
     banner_img = models.ImageField(upload_to=UploadTo('banners'), verbose_name=_('banner img'))
