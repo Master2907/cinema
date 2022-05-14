@@ -3,7 +3,7 @@
 {% load my_tags %}
 {% block content %}
     <!-- BODY START  -->
-    <div class="container pb-5 mt-5">
+    <div class="container-fluid container-lg pb-5 mt-5">
         <div class="row">
             <div class="col-12 col-md-10 col-lg-8 offset-md-1 offset-lg-2 ">
                 <h1 class="text-white d-flex justify-content-center py-2">Look for anything</h1>
@@ -16,10 +16,10 @@
             </div>
         </div>
         <!-- FILM CARDS START -->
-        <div class="row justify-content-xl-center">
+        <div class="row px-4 justify-content-xl-center">
             {% if object_list %}
                 {% for film in object_list %}
-                    <div class="col-4 col-lg-3 col-xl-2 mt-5">
+                    <div class="col-3 col-lg-3 col-xl-2 mt-5">
                         <div class="film-cards position-relative my-3">
                             <div class="film-card-in-div d-none position-absolute w-100 h-100">
                             {% if request.user.is_authenticated %}
@@ -65,7 +65,7 @@
         </div>
         <!-- FILM CARDS END -->
         {% if page_obj.paginator.count >= 13 %}
-            <div class="row  pt-5">
+            <div class="row mt-5 pt-5">
                 <div class="col-12 col-lg-8 offset-lg-2 d-flex justify-content-center">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination ">
