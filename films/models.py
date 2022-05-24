@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from datetime import datetime
 from django.contrib.auth import get_user_model
 from config.helpers import UploadTo
-
+from django.contrib.auth.forms import forms
 UserModel = get_user_model()
 
 m_type = (
