@@ -14,10 +14,6 @@ def leave_comment(request, pk):
         if form.is_valid():
             user = request.user
             comment = request.POST.get('comment')
-            if CommentModel.objects.filter(user=user, film=film, comment=comment).exists():
-                pass
-            else:
-                CommentModel.objects.create(user=user, film=film, comment=comment)
     else:
         form = CommentForm()
     return HttpResponseRedirect(reverse('pages:watch', args=[str(pk)]))

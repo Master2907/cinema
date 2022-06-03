@@ -1,5 +1,6 @@
 $('.my-slickies').slick({
-    autoplay: false,
+    autoplay: true,
+    autoplaySpeed: 4000,
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 1,
@@ -9,6 +10,7 @@ $('.my-slickies').slick({
             settings: {
                 slidesToShow: 4,
                 slidesToScroll: 2,
+                infinite: true,
             }
         },
     ]

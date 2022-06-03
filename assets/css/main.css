@@ -9,7 +9,7 @@
 }
 
 body {
-    background-color: rgb(0, 1, 35);
+    background-color: rgb(0, 1, 35) !important;
 }
 
 .carousel-inner img {
@@ -125,11 +125,11 @@ a {
     height: 40px;
 }
 
-.save-button{
+.slicks-inner-div form button{
     left: 78%;
     top: 10px;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
 }
 
 .slicks-inner-div {
@@ -187,7 +187,7 @@ a {
 }
 
 .film-card-img {
-    left: 79%;
+    left: 80%;
     width: 35px;
     height: 35px;
 }
@@ -275,6 +275,7 @@ option {
     color: #fff;
     font-family: Adamina;
     font-weight: 400;
+    font-style: bold;
     font-size: 30px;
     letter-spacing: 2px;
 }
@@ -304,7 +305,7 @@ option {
 .read-more-button {
     background-color: transparent;
     color: #ffffff;
-    transition: 0.5s;
+    transition: 0.5;
     outline: none;
 }
 
@@ -350,17 +351,9 @@ option {
     padding-bottom: 100px !important;
 }
 
-.dropdown-active {
-    color: lightskyblue !important;
-}
-
 @media (max-width: 991px) {
-    .brand-name {
-        font-size: 40px !important;
-    }
-
     .nav-link {
-        font-size: 20px;
+        font-size: 20px !important;
     }
 
     .banners {
@@ -376,23 +369,17 @@ option {
     }
 
     .c-names {
-        font-size: 30px !important;
+        font-size: 40px ;
     }
 
-    .slicks-inner-content div p {
-        font-size: 20px;
+    .slicks-inner-content p {
+        font-size: 21px;
     }
 
-    .slicks-inner-content {
-        top: 20%;
-    }
-
-    .slicks-inner-content>.watch-button {
-        top: 60%;
-    }
-
-    .save-button {
-        left: 77%;
+    .slicks-inner-div form button {
+        left: 78%;
+        width: 40px;
+        height: 40px;
     }
 
     .filter-div p {
@@ -416,28 +403,40 @@ option {
     }
 
     .form-inputs {
-        font-size: 18px;
+        font-size: 22px;
     }
 
     .contact-icons {
     width: 30px;
     height: 30px;
-}
+    }
+
+    .slicks-inner-div form button{
+        left: 78%;
+        width: 40px;
+        height: 40px;
+    }
 }
 
+
+
+/* width */
 ::-webkit-scrollbar {
     width: 10px;
-}
-
-::-webkit-scrollbar-track {
-box-shadow: inset 0 0 1px blue;
-}
-
-::-webkit-scrollbar-thumb {
-background: rgb(0, 1, 62);
-border-radius: 50px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-background: darkblue;
-}
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 1px blue; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(0, 1, 62); 
+    border-radius: 50px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: darkblue; 
+  }
