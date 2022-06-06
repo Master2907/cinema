@@ -10,7 +10,7 @@
                 <h1 class="m-0 text-white d-flex justify-content-center">Registration</h1>
                 <hr class="bg-primary my-3">
                 <div class="form-group text-white">
-                    <form method="post" action="">
+                    <form method="post">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <input class="w-100 btn btn-primary mt-2 p-1 form-inputs" type="submit" value="Submit">
